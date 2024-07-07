@@ -5,6 +5,8 @@ import java.util.Objects;
 
 import javax.persistence.ConstraintMode;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,6 +15,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import br.com.lojavitual.enums.TipoEndereco;
 
 @Entity
 @Table(name = "endereco")
@@ -33,6 +37,9 @@ public class Endereco implements Serializable {
 	private String uf; 
 	private String cidade;
 	private String complemento; 
+	
+	@Enumerated(EnumType.STRING)
+	private TipoEndereco tipoEndereco;
 	
 	@ManyToOne(targetEntity = Pessoa.class)
 	@JoinColumn(name = "pessoa_id",nullable = false,foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT,name = "pessoa_fk") )
