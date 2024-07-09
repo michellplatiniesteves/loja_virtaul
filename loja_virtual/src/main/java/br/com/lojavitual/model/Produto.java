@@ -31,12 +31,18 @@ public class Produto implements Serializable{
 	@Column(columnDefinition = "text",length = 2500)
 	private String descricao;
 	
+	@Column(nullable = false)
 	private Double peso=0.0;
+	@Column(nullable = false)
 	private Double altura=0.0;
+	@Column(nullable = false)
 	private Double largura=0.0;
+	@Column(nullable = false)
 	private Double profundidade=0.0;
+	@Column(nullable = false)
 	private BigDecimal valorVenda=BigDecimal.ZERO;
 	private Integer qtdEstoque=0;
+	@Column(nullable = false)
 	private Integer qtdeAlertaEstoque=0;
 	private String linkYoutube;
 	private Boolean alertaQtdeEstoque=Boolean.FALSE;

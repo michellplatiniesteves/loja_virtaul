@@ -3,6 +3,7 @@ package br.com.lojavitual.model;
 import java.io.Serializable;
 import java.util.Objects;
 
+import javax.persistence.Column;
 import javax.persistence.ConstraintMode;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
@@ -27,11 +28,13 @@ public class NotaItemProduto implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE,generator ="seq_nota_item_produto")
 	private Long id;
+	@Column(nullable = false)
 	private Double quantidade;
 	@ManyToOne
 	@JoinColumn(name = "produto_id",nullable = false,foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT,name = "produto_fk"))
 	private Produto produto;
 	
+	@ManyToOne
 	@JoinColumn(name = "nota_fiscal_compra_id",nullable = false,foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT,name = "nota_fiscal_compra_fk"))
 	private NotaFiscalCompra notaFiscalCompra;
 

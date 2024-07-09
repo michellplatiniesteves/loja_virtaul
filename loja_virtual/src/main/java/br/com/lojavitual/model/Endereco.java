@@ -3,6 +3,7 @@ package br.com.lojavitual.model;
 import java.io.Serializable;
 import java.util.Objects;
 
+import javax.persistence.Column;
 import javax.persistence.ConstraintMode;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -30,11 +31,17 @@ public class Endereco implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE,generator ="seq_endereco" )
     private Long id;
+	@Column(nullable = false)
 	private String ruaLogra; 
-	private String cef; 
+	@Column(nullable = false)
+	private String cep; 
+	@Column(nullable = false)
 	private String numero; 
+	@Column(nullable = false)
 	private String bairro; 
+	@Column(nullable = false)
 	private String uf; 
+	@Column(nullable = false)
 	private String cidade;
 	private String complemento; 
 	
@@ -61,12 +68,12 @@ public class Endereco implements Serializable {
 		this.ruaLogra = ruaLogra;
 	}
 
-	public String getCef() {
-		return cef;
+	public String getCep() {
+		return cep;
 	}
 
-	public void setCef(String cef) {
-		this.cef = cef;
+	public void setCef(String cep) {
+		this.cep= cep;
 	}
 
 	public String getNumero() {
@@ -136,7 +143,7 @@ public class Endereco implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Endereco [id=" + id + ", ruaLogra=" + ruaLogra + ", cef=" + cef + ", numero=" + numero + ", bairro="
+		return "Endereco [id=" + id + ", ruaLogra=" + ruaLogra + ", cep=" + cep + ", numero=" + numero + ", bairro="
 				+ bairro + ", uf=" + uf + ", cidade=" + cidade + ", complemento=" + complemento + ", pessoa=" + pessoa
 				+ "]";
 	}
