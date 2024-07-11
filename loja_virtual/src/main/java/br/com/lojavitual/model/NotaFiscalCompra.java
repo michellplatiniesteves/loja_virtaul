@@ -39,7 +39,7 @@ public class NotaFiscalCompra  implements Serializable{
 	private String descricaoObs;
 	@Column(nullable = false)
 	private BigDecimal valorTotal;
-	@Column(nullable = false)
+
 	private BigDecimal valorDesconto;
 	@Column(nullable = false)
 	private BigDecimal valorIcms;
