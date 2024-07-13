@@ -10,27 +10,41 @@ import br.com.lojavitual.repository.AcessoRepository;
 
 @Service
 public class AcessoService {
-	
-    @Autowired
+
+	@Autowired
 	private AcessoRepository acessoRepository;
-    
-    public Acesso salvar(Acesso acesso) {
-    	return acessoRepository.save(acesso);
-    }
-    public void deletar(Long id) {
-     acessoRepository.deleteById(id);
-    }
-    public void deletarPorId(Long id) {
-        acessoRepository.deleteById(id);
-       }
-    public List<Acesso> findDescricao(Acesso acesso){
-    	List<Acesso> lista = acessoRepository.buscarAcessoDescricao(acesso.getDescricao());
+
+	public Acesso salvar(Acesso acesso) {
+		return acessoRepository.save(acesso);
+	}
+
+	public void deletar(Long id) {
+		acessoRepository.deleteById(id);
+	}
+
+	public void deletarPorId(Long id) {
+		acessoRepository.deleteById(id);
+	}
+
+	public List<Acesso> findDescricoes(Acesso acesso) {
+		List<Acesso> lista = acessoRepository.buscarAcessoDescricoes(acesso.getDescricao());
 		return lista;
-    	
-    }
-    
-    public List<Acesso>buscarAcessos(){
-    	List<Acesso>acessos = acessoRepository.findAll();
-    	return acessos;
-    }
+
+	}
+
+	public Acesso findDescricao(String acesso) {
+		Acesso acessoresp = acessoRepository.buscarAcessoDescricao(acesso);
+		return acessoresp;
+
+	}
+
+	public Acesso buscarAcessoPorId(Long id) {
+		Acesso acesso = acessoRepository.findById(id).get();
+		return acesso;
+	}
+
+	public List<Acesso> buscarAcessos() {
+		List<Acesso> acessos = acessoRepository.findAll();
+		return acessos;
+	}
 }

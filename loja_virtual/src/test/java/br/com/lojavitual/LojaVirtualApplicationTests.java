@@ -108,7 +108,7 @@ class LojaVirtualApplicationTests extends TestCase{
 	}
 	
 	@Test
-	public void CadastraAcesso() {
+	public void CadastraAcesso() throws ExceptionMentoriaJava {
 		Acesso acesso = new Acesso(); 
 		acesso.setDescricao("ROLE_GERENTE");
 		acessoRepository.save(acesso);
