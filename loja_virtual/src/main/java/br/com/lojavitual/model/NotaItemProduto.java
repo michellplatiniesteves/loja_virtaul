@@ -38,6 +38,18 @@ public class NotaItemProduto implements Serializable{
 	@JoinColumn(name = "nota_fiscal_compra_id",nullable = false,foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT,name = "nota_fiscal_compra_fk"))
 	private NotaFiscalCompra notaFiscalCompra;
 
+	@ManyToOne(targetEntity = Pessoa.class)
+	@JoinColumn(name = "empresa_id",nullable = false,foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT,name= "empresa_fk"))
+	private Pessoa empresa;
+	
+	public void setEmpresa(Pessoa empresa) {
+		this.empresa = empresa;
+	}
+	
+	public Pessoa getEmpresa() {
+		return empresa;
+	}
+	
 	public Long getId() {
 		return id;
 	}
@@ -90,7 +102,7 @@ public class NotaItemProduto implements Serializable{
 	@Override
 	public String toString() {
 		return "NotaItemProduto [id=" + id + ", quantidade=" + quantidade + ", produto=" + produto
-				+ ", notaFiscalCompra=" + notaFiscalCompra + "]";
+				+ ", notaFiscalCompra=" + notaFiscalCompra + ", empresa=" + empresa + "]";
 	}
 
 	

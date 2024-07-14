@@ -64,6 +64,16 @@ public class VendaCompraLojaVirtual implements Serializable{
 	@Column(nullable = false)
 	@Temporal(TemporalType.DATE)
 	private Date dataEntrega;
+	
+	@ManyToOne(targetEntity = Pessoa.class)
+	@JoinColumn(name = "empresa_id",nullable = false,foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT,name= "empresa_fk"))
+	private Pessoa empresa;
+	public void setEmpresa(Pessoa empresa) {
+		this.empresa = empresa;
+	}
+	public Pessoa getEmpresa() {
+		return empresa;
+	}
 	public Long getId() {
 		return id;
 	}
@@ -157,7 +167,7 @@ public class VendaCompraLojaVirtual implements Serializable{
 				+ ", enderecoCobranca=" + enderecoCobranca + ", valorTotal=" + valorTotal + ", valorDesconto="
 				+ valorDesconto + ", formaPagamento=" + formaPagamento + ", notaFiscalVenda=" + notaFiscalVenda
 				+ ", cupDesc=" + cupDesc + ", diasEntrega=" + diasEntrega + ", dataVenda=" + dataVenda
-				+ ", dataEntrega=" + dataEntrega + "]";
+				+ ", dataEntrega=" + dataEntrega + ", empresa=" + empresa + "]";
 	}
 	
 	

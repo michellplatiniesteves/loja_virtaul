@@ -62,6 +62,18 @@ public class ContaPagar implements Serializable {
 	private BigDecimal valorTotal;
 	
 	private BigDecimal valorDesconto;
+	
+	@ManyToOne(targetEntity = Pessoa.class)
+	@JoinColumn(name = "empresa_id",nullable = false,foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT,name= "empresa_fk"))
+	private Pessoa empresa;
+	
+	public void setEmpresa(Pessoa empresa) {
+		this.empresa = empresa;
+	}
+	
+	public Pessoa getEmpresa() {
+		return empresa;
+	}
 	public Long getId() {
 		return id;
 	}
@@ -136,7 +148,7 @@ public class ContaPagar implements Serializable {
 		return "ContaPagar [id=" + id + ", pessoaFornecedor=" + pessoaFornecedor + ", pessoa=" + pessoa + ", descricao="
 				+ descricao + ", statusContPagar=" + statusContPagar + ", dtVencimento=" + dtVencimento
 				+ ", dtPagamento=" + dtPagamento + ", valorTotal=" + valorTotal + ", valorDesconto=" + valorDesconto
-				+ "]";
+				+ ", empresa=" + empresa + "]";
 	}
 
 	

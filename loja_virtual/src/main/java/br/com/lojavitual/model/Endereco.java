@@ -52,6 +52,25 @@ public class Endereco implements Serializable {
 	@JoinColumn(name = "pessoa_id",nullable = false,foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT,name = "pessoa_fk") )
 	private Pessoa pessoa;
 
+	@ManyToOne(targetEntity = Pessoa.class)
+	@JoinColumn(name = "empresa_id",nullable = false,foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT,name= "empresa_fk"))
+	private Pessoa empresa;
+	
+	public void setCep(String cep) {
+		this.cep = cep;
+	}
+	public TipoEndereco getTipoEndereco() {
+		return tipoEndereco;
+	}
+	public void setTipoEndereco(TipoEndereco tipoEndereco) {
+		this.tipoEndereco = tipoEndereco;
+	}
+	public Pessoa getEmpresa() {
+		return empresa;
+	}
+	public void setEmpresa(Pessoa empresa) {
+		this.empresa = empresa;
+	}
 	public Long getId() {
 		return id;
 	}
@@ -144,8 +163,8 @@ public class Endereco implements Serializable {
 	@Override
 	public String toString() {
 		return "Endereco [id=" + id + ", ruaLogra=" + ruaLogra + ", cep=" + cep + ", numero=" + numero + ", bairro="
-				+ bairro + ", uf=" + uf + ", cidade=" + cidade + ", complemento=" + complemento + ", pessoa=" + pessoa
-				+ "]";
+				+ bairro + ", uf=" + uf + ", cidade=" + cidade + ", complemento=" + complemento + ", tipoEndereco="
+				+ tipoEndereco + ", pessoa=" + pessoa + ", empresa=" + empresa + "]";
 	}
 	
 	

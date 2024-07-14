@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import br.com.lojavitual.model.ObjetoErroDTO;
+import br.com.lojavitual.DTO.ObjetoErroDTO;
 
 @RestControllerAdvice
 public class ControleExcecoes extends ResponseEntityExceptionHandler {

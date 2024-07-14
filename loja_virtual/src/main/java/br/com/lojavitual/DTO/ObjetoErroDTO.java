@@ -1,4 +1,4 @@
-package br.com.lojavitual.model;
+package br.com.lojavitual.DTO;
 
 import java.io.Serializable;
 

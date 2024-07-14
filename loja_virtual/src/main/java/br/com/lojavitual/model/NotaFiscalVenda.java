@@ -47,6 +47,23 @@ public class NotaFiscalVenda  implements Serializable{
 	private String xml;
 	@Column(columnDefinition = "text",nullable = false)
 	private String pdf;
+	
+	@ManyToOne(targetEntity = Pessoa.class)
+	@JoinColumn(name = "empresa_id",nullable = false,foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT,name= "empresa_fk"))
+	private Pessoa empresa;
+	
+	public void setEmpresa(Pessoa empresa) {
+		this.empresa = empresa;
+	}
+	public void setVendaCompraLojaVirtual(VendaCompraLojaVirtual vendaCompraLojaVirtual) {
+		this.vendaCompraLojaVirtual = vendaCompraLojaVirtual;
+	}
+	public Pessoa getEmpresa() {
+		return empresa;
+	}
+	public VendaCompraLojaVirtual getVendaCompraLojaVirtual() {
+		return vendaCompraLojaVirtual;
+	}
 	public Long getId() {
 		return id;
 	}
@@ -100,8 +117,9 @@ public class NotaFiscalVenda  implements Serializable{
 	}
 	@Override
 	public String toString() {
-		return "NotaFiscalVenda [id=" + id + ", numero=" + numero + ", serie=" + serie + ", tipo=" + tipo + ", xml="
-				+ xml + ", pdf=" + pdf + "]";
+		return "NotaFiscalVenda [id=" + id + ", numero=" + numero + ", serie=" + serie + ", tipo=" + tipo
+				+ ", vendaCompraLojaVirtual=" + vendaCompraLojaVirtual + ", xml=" + xml + ", pdf=" + pdf + ", empresa="
+				+ empresa + "]";
 	}
 	
 
