@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.lojavitual.ExceptionMentoriaJava;
+import br.com.lojavitual.excecoes.ExceptionMentoriaJava;
 import br.com.lojavitual.model.Acesso;
 import br.com.lojavitual.repository.AcessoRepository;
 import br.com.lojavitual.service.AcessoService;

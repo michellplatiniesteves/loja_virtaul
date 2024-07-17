@@ -10,4 +10,6 @@ import br.com.lojavitual.model.PessoaJuridica;
 public interface PessoaJuridicaRepository extends CrudRepository<PessoaJuridica, Long> {
 	@Query(value = "select pj from PessoaJuridica pj where pj.cnpj = ?1")
 	public PessoaJuridica existeCnpj(String cnpj);
+	@Query(value = "select pj from PessoaJuridica pj where pj.email = ?1")
+	public PessoaJuridica existeLogin(String email);
 }

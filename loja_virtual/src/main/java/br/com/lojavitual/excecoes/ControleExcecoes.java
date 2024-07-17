@@ -1,14 +1,17 @@
-package br.com.lojavitual;
+package br.com.lojavitual.excecoes;
 
 import java.sql.SQLDataException;
 import java.sql.SQLException;
 import java.util.List;
+
+import javax.persistence.NonUniqueResultException;
 
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -41,6 +44,9 @@ public class ControleExcecoes extends ResponseEntityExceptionHandler {
 			for (ObjectError objectError : list) {
 				msg += objectError.getDefaultMessage() + "\n";
 			}
+		}
+		if (ex instanceof HttpMessageNotReadableException) {
+			msg = "Não está sendo enviado dados para o corpo da requisição";
 		} else {
 			msg = ex.getMessage();
 		}
@@ -64,6 +70,10 @@ public class ControleExcecoes extends ResponseEntityExceptionHandler {
 		}
 		if (ex instanceof ConstraintViolationException) {
 			msg = ((ConstraintViolationException) ex).getCause().getCause().getMessage();
+
+		}
+		if (ex instanceof NonUniqueResultException) {
+			msg = ((NonUniqueResultException) ex).getCause().getCause().getMessage();
 
 		} else {
 			msg = ex.getMessage();

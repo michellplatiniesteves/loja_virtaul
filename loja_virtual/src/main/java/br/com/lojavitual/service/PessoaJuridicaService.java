@@ -1,5 +1,6 @@
 package br.com.lojavitual.service;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Calendar;
 import java.util.List;
 
@@ -23,9 +24,13 @@ public class PessoaJuridicaService {
 	private UsuarioRepository usuarioRepository;
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
-
-	public PessoaJuridica salvarPessoaJuridica(PessoaJuridica pessoaJuridica) {
-
+	@Autowired
+	ServiceSendEmail serviceSendEmail;
+	public PessoaJuridica salvarPessoaJuridica(PessoaJuridica pessoaJuridica) throws UnsupportedEncodingException {
+       for(int i=0; i<pessoaJuridica.getEnderecos().size();i++ ){
+    	   pessoaJuridica.getEnderecos().get(i).setPessoa(pessoaJuridica);
+    	   pessoaJuridica.getEnderecos().get(i).setEmpresa(pessoaJuridica);
+       };
 		pessoaJuridica = pessoaJuridicaRepository.save(pessoaJuridica);
 
 		Usuario usuariopj = usuarioRepository.findByUserPessoaPJ(pessoaJuridica.getId(), pessoaJuridica.getEmail());
@@ -45,6 +50,17 @@ public class PessoaJuridicaService {
 
 			usuariopj = usuarioRepository.save(usuariopj);
 			usuarioRepository.insereAcessoUsuario(usuariopj.getId());
+			
+			usuarioRepository.insereAcessoUsuario(usuariopj.getId(),"ROLE_ADMIN");
+			StringBuilder stringBuilder = new StringBuilder();
+			stringBuilder.append("<b>Login :" +usuariopj.getLogin()+"</b>").append("<b>Senha :" +senha+"</b>");
+			try {
+				serviceSendEmail.enviarEmail("Acesso ao sistema", senha, pessoaJuridica.getEmail());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			
 		}
 
 		return pessoaJuridica;
@@ -66,6 +82,10 @@ public class PessoaJuridicaService {
 
 	public PessoaJuridica existeCnpj(PessoaJuridica pessoaJuridica) {
 		pessoaJuridica = pessoaJuridicaRepository.existeCnpj(pessoaJuridica.getCnpj());
+		return pessoaJuridica;
+	}
+	public PessoaJuridica existeLogin(PessoaJuridica pessoaJuridica) {
+		pessoaJuridica = pessoaJuridicaRepository.existeLogin(pessoaJuridica.getEmail());
 		return pessoaJuridica;
 	}
 

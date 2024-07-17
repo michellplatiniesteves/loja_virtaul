@@ -1,5 +1,6 @@
 package br.com.lojavitual.controller;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.lojavitual.ExceptionMentoriaJava;
+import br.com.lojavitual.excecoes.ExceptionMentoriaJava;
 import br.com.lojavitual.model.PessoaJuridica;
 import br.com.lojavitual.service.PessoaJuridicaService;
 
@@ -22,17 +23,20 @@ public class PessoaJuridicaController {
 
 	@Autowired
 	PessoaJuridicaService pessoaJuridicaService;
-
+	
 	@ResponseBody
 	@PostMapping("**/salvarPessoaJuridica")
 	public ResponseEntity<PessoaJuridica> salvarPessoaJuridica(@RequestBody PessoaJuridica pessoaJuridica)
-			throws ExceptionMentoriaJava {
+			throws ExceptionMentoriaJava, UnsupportedEncodingException {
 
 		if (pessoaJuridica == null) {
 			throw new ExceptionMentoriaJava("Pessoa juridica nao pode ser vazia");
 		}
 		if (pessoaJuridica.getId() == null && pessoaJuridicaService.existeCnpj(pessoaJuridica) != null) {
 			throw new ExceptionMentoriaJava("CNPJ já cadastrada");
+		}
+		if(pessoaJuridica.getId() == null && pessoaJuridicaService.existeLogin(pessoaJuridica)!= null) {
+			throw new ExceptionMentoriaJava("Login já cadastrada");
 		}
 		pessoaJuridica = pessoaJuridicaService.salvarPessoaJuridica(pessoaJuridica);
 

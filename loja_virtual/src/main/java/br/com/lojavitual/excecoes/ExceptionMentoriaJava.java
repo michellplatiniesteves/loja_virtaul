@@ -1,4 +1,4 @@
-package br.com.lojavitual;
+package br.com.lojavitual.excecoes;
 
 public class ExceptionMentoriaJava extends Exception {
 

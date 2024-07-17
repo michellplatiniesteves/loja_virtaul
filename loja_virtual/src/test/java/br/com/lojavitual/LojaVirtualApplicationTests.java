@@ -18,6 +18,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.com.lojavitual.controller.AcessoController;
+import br.com.lojavitual.excecoes.ExceptionMentoriaJava;
 import br.com.lojavitual.model.Acesso;
 import br.com.lojavitual.repository.AcessoRepository;
 import br.com.lojavitual.service.AcessoService;
