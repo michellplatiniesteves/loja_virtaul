@@ -14,6 +14,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "forma_pagamento")
@@ -28,6 +30,8 @@ public class FormaPagamento implements Serializable {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_forma_pagamento")
 	private Long id;
 
+	@NotNull(message = "Informe a descrição")
+	@NotEmpty(message = "Informe a descrição")
 	@Column(nullable = false)
 	private String descricao;
 

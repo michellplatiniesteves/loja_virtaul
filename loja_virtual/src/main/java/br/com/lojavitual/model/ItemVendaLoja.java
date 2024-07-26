@@ -14,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
 
 @Entity
 @Table(name = "item_venda_loja")
@@ -28,6 +29,7 @@ public class ItemVendaLoja implements Serializable{
 	@GeneratedValue(generator ="seq_item_venda_loja",strategy = GenerationType.SEQUENCE )
 	private Long id;
 	
+	@Min(1)
 	@Column(nullable = false)
 	private Double quantidade;
 	@ManyToOne

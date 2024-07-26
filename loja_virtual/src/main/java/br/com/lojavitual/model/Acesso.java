@@ -13,6 +13,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "acesso")
 @SequenceGenerator(name = "seq_acesso",sequenceName ="seq_acesso",initialValue = 1,allocationSize = 1 )
@@ -25,6 +27,9 @@ public class Acesso implements GrantedAuthority{
 	@Id
 	@GeneratedValue (strategy = GenerationType.SEQUENCE,generator ="seq_acesso" )
 	private Long id;
+		
+	@NotNull(message = "Informe a descrição")
+	@NotEmpty(message = "Informe a descrição")
 	@Column(nullable = false)
 	private String descricao;
 	@JsonIgnore

@@ -36,6 +36,7 @@ public class NotaFiscalCompra  implements Serializable{
 	private String numeroNota;
 	@Column(nullable = false)
 	private String serieNota;
+	
 	private String descricaoObs;
 	@Column(nullable = false)
 	private BigDecimal valorTotal;

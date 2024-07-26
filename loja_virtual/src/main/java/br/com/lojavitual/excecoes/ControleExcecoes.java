@@ -1,12 +1,16 @@
 package br.com.lojavitual.excecoes;
 
+import java.io.UnsupportedEncodingException;
 import java.sql.SQLDataException;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.mail.MessagingException;
 import javax.persistence.NonUniqueResultException;
 
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.hibernate.exception.ConstraintViolationException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -20,10 +24,13 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import br.com.lojavitual.DTO.ObjetoErroDTO;
+import br.com.lojavitual.service.ServiceSendEmail;
 
 @RestControllerAdvice
 public class ControleExcecoes extends ResponseEntityExceptionHandler {
-
+    @Autowired
+	ServiceSendEmail serviceSendEmail;
+    
 	@ExceptionHandler(ExceptionMentoriaJava.class)
 	public ResponseEntity<Object> handleExceptionCustom(ExceptionMentoriaJava ex) {
 		ObjetoErroDTO objetoErroDTO = new ObjetoErroDTO();
@@ -44,11 +51,19 @@ public class ControleExcecoes extends ResponseEntityExceptionHandler {
 			for (ObjectError objectError : list) {
 				msg += objectError.getDefaultMessage() + "\n";
 			}
-		}
-		if (ex instanceof HttpMessageNotReadableException) {
+		} else if (ex instanceof HttpMessageNotReadableException) {
 			msg = "Não está sendo enviado dados para o corpo da requisição";
 		} else {
 			msg = ex.getMessage();
+			try {
+				serviceSendEmail.enviarEmail("Erro na loja", ExceptionUtils.getStackTrace(ex), "michell.platini@gmail.com");
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (MessagingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		objetoErroDTO.setErro(msg);
 		objetoErroDTO.setCode(status.value() + "==>" + status.getReasonPhrase());
@@ -77,6 +92,15 @@ public class ControleExcecoes extends ResponseEntityExceptionHandler {
 
 		} else {
 			msg = ex.getMessage();
+			try {
+				serviceSendEmail.enviarEmail("Erro na loja", ExceptionUtils.getStackTrace(ex), "michell.platini@gmail.com");
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (MessagingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		objetoErroDTO.setErro(msg);
 		objetoErroDTO.setCode(HttpStatus.INTERNAL_SERVER_ERROR.toString());

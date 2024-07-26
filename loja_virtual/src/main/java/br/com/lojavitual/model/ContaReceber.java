@@ -20,6 +20,8 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import br.com.lojavitual.enums.StatusContaReceber;
 
@@ -40,6 +42,8 @@ public class ContaReceber implements Serializable {
 	@JoinColumn(name = "pessoa_id", nullable = false, foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT, name = "pessoa_fk"))
 	private Pessoa pessoa;
 	
+	@NotNull(message = "Informe a descrição")
+	@NotEmpty(message = "Informe a descrição")
 	@Column(nullable = false)
 	private String descricao;
 

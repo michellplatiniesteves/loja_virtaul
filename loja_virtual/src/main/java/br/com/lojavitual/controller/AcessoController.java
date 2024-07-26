@@ -2,6 +2,8 @@ package br.com.lojavitual.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +33,7 @@ public class AcessoController {
 	
 	@ResponseBody
 	@PostMapping(value = "**/salvarAcesso")
-	public ResponseEntity<Acesso> salvarAcesso(@RequestBody Acesso acesso) throws ExceptionMentoriaJava {
+	public ResponseEntity<Acesso> salvarAcesso(@RequestBody @Valid Acesso acesso) throws ExceptionMentoriaJava {
      if(acesso.getId() == null) {
     	 Acesso descricao = acessoService.findDescricao(acesso.getDescricao());
     	 if(descricao != null ) {
