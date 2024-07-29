@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
 
+import javax.management.loading.PrivateClassLoader;
 import javax.persistence.Column;
 import javax.persistence.ConstraintMode;
 import javax.persistence.Entity;
@@ -15,8 +16,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "produto")
@@ -31,40 +34,99 @@ public class Produto implements Serializable{
 	@GeneratedValue(generator ="seq_produto",strategy = GenerationType.SEQUENCE )
 	private Long id;
 	
+	@Size(min = 10,message = "O nome de produto deve conter minimo 10 letras")
 	@NotNull(message = "Informe o nome do produto")
 	@NotEmpty(message = "Informe o nome do produto")
 	@Column(nullable = false)
 	private String nome;
 	
-	@NotNull(message = "Informe a descrição")
-	@NotEmpty(message = "Informe a descrição")
+	@NotNull(message = "Informe a descrição do produto")
+	@NotEmpty(message = "Informe a descrição do produto")
 	@Column(columnDefinition = "text",length = 2500)
 	private String descricao;
 	
+	@NotNull(message = "Informe o Tipo da Unidade")
+	@NotEmpty(message = "Informe o Tipo da Unidade")
+	@Column(nullable = false)
+	private String tipoUnidade;
+	
+	@Min(value = 1,message = "Informe valores acima de 0")
+	@NotNull(message = "Informe o peso")
 	@Column(nullable = false)
 	private Double peso=0.0;
+	
+	@NotNull(message = "Informe a altura")
 	@Column(nullable = false)
 	private Double altura=0.0;
+	
+	@NotNull(message = "Informe a largura")
 	@Column(nullable = false)
 	private Double largura=0.0;
+	
+	@NotNull(message = "Informe a profundidade")
 	@Column(nullable = false)
 	private Double profundidade=0.0;
+	
+	@NotNull(message = "Informe o Valor de Venda")
 	@Column(nullable = false)
 	private BigDecimal valorVenda=BigDecimal.ZERO;
+	
 	private Integer qtdEstoque=0;
+	
 	@Column(nullable = false)
 	private Integer qtdeAlertaEstoque=0;
+	
 	private String linkYoutube;
 	private Boolean alertaQtdeEstoque=Boolean.FALSE;
 	private Boolean ativo =Boolean.TRUE;
 	private Integer qtdClique =0;
 	@ManyToOne(targetEntity = Pessoa.class)
 	@JoinColumn(name = "empresa_id",nullable = false,foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT,name= "empresa_fk"))
-	private Pessoa empresa;
-	public void setEmpresa(Pessoa empresa) {
+	private PessoaJuridica empresa;
+	
+	@ManyToOne(targetEntity=CategoriaProduto.class)
+	@JoinColumn(name = "categoria_produto_id",nullable=false, foreignKey=@ForeignKey(value=ConstraintMode.CONSTRAINT,name= "categoria_produto_fk"))
+	private CategoriaProduto categoriaProduto;
+	
+	@ManyToOne(targetEntity= MarcaProduto.class)
+	@JoinColumn(name = "marca_produto_id",nullable=false, foreignKey=@ForeignKey(value=ConstraintMode.CONSTRAINT,name= "marca_produto_fk"))
+	private MarcaProduto marcaProduto;
+	
+	@ManyToOne(targetEntity= NotaItemProduto.class)
+	@JoinColumn(name = "nota_item_produto_id",nullable=false, foreignKey=@ForeignKey(value=ConstraintMode.CONSTRAINT,name= "nota_item_produto_fk"))
+	private NotaItemProduto notaItemProduto;
+	
+	
+	public void setNotaItemProduto(NotaItemProduto notaItemProduto) {
+		this.notaItemProduto = notaItemProduto;
+	}
+	
+	public NotaItemProduto getNotaItemProduto() {
+		return notaItemProduto;
+	}
+	public void setMarcaProduto(MarcaProduto marcaProduto) {
+		this.marcaProduto = marcaProduto;
+	}
+	
+	public MarcaProduto getMarcaProduto() {
+		return marcaProduto;
+	}
+	public void setTipoUnidade(String tipoUnidade) {
+		this.tipoUnidade = tipoUnidade;
+	}
+	public String getTipoUnidade() {
+		return tipoUnidade;
+	}
+	public void setCategoriaProduto(CategoriaProduto categoriaProduto) {
+		this.categoriaProduto = categoriaProduto;
+	}
+	public CategoriaProduto getCategoriaProduto() {
+		return categoriaProduto;
+	}
+	public void setEmpresa(PessoaJuridica empresa) {
 		this.empresa = empresa;
 	}
-	public Pessoa getEmpresa() {
+	public PessoaJuridica getEmpresa() {
 		return empresa;
 	}
 	public Long getId() {
@@ -168,11 +230,12 @@ public class Produto implements Serializable{
 	}
 	@Override
 	public String toString() {
-		return "Produto [id=" + id + ", nome=" + nome + ", descricao=" + descricao + ", peso=" + peso + ", altura="
-				+ altura + ", largura=" + largura + ", profundidade=" + profundidade + ", valorVenda=" + valorVenda
-				+ ", qtdEstoque=" + qtdEstoque + ", qtdeAlertaEstoque=" + qtdeAlertaEstoque + ", linkYoutube="
-				+ linkYoutube + ", alertaQtdeEstoque=" + alertaQtdeEstoque + ", ativo=" + ativo + ", qtdClique="
-				+ qtdClique + ", empresa=" + empresa + "]";
+		return "Produto [id=" + id + ", nome=" + nome + ", descricao=" + descricao + ", tipoUnidade=" + tipoUnidade
+				+ ", peso=" + peso + ", altura=" + altura + ", largura=" + largura + ", profundidade=" + profundidade
+				+ ", valorVenda=" + valorVenda + ", qtdEstoque=" + qtdEstoque + ", qtdeAlertaEstoque="
+				+ qtdeAlertaEstoque + ", linkYoutube=" + linkYoutube + ", alertaQtdeEstoque=" + alertaQtdeEstoque
+				+ ", ativo=" + ativo + ", qtdClique=" + qtdClique + ", empresa=" + empresa + ", categoriaProduto="
+				+ categoriaProduto + ", marcaProduto=" + marcaProduto + ", notaItemProduto=" + notaItemProduto + "]";
 	}
 	
 	
