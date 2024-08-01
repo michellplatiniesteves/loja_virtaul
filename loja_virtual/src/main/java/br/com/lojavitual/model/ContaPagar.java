@@ -38,13 +38,13 @@ public class ContaPagar implements Serializable {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_conta_pagar")
 	private Long id;
 
-	@ManyToOne(targetEntity = Pessoa.class)
+	@ManyToOne(targetEntity = PessoaJuridica.class)
 	@JoinColumn(name = "pessoa_forn_id", nullable = false, foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT, name = "pessoa_forn_fk"))
-	private Pessoa pessoaFornecedor;
+	private PessoaJuridica pessoaFornecedor;
 
-	@ManyToOne(targetEntity = Pessoa.class)
+	@ManyToOne(targetEntity = PessoaFisica.class)
 	@JoinColumn(name = "pessoa_id", nullable = false, foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT, name = "pessoa_fk"))
-	private Pessoa pessoa;
+	private PessoaFisica pessoa;
 	
 	@NotNull(message = "Informe a descrição")
 	@NotEmpty(message = "Informe a descrição")
@@ -67,11 +67,11 @@ public class ContaPagar implements Serializable {
 	
 	private BigDecimal valorDesconto;
 	
-	@ManyToOne(targetEntity = Pessoa.class)
+	@ManyToOne(targetEntity = PessoaJuridica.class)
 	@JoinColumn(name = "empresa_id",nullable = false,foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT,name= "empresa_fk"))
-	private Pessoa empresa;
+	private PessoaJuridica empresa;
 	
-	public void setEmpresa(Pessoa empresa) {
+	public void setEmpresa(PessoaJuridica empresa) {
 		this.empresa = empresa;
 	}
 	
@@ -87,13 +87,13 @@ public class ContaPagar implements Serializable {
 	public Pessoa getPessoaFornecedor() {
 		return pessoaFornecedor;
 	}
-	public void setPessoaFornecedor(Pessoa pessoaFornecedor) {
+	public void setPessoaFornecedor(PessoaJuridica pessoaFornecedor) {
 		this.pessoaFornecedor = pessoaFornecedor;
 	}
 	public Pessoa getPessoa() {
 		return pessoa;
 	}
-	public void setPessoa(Pessoa pessoa) {
+	public void setPessoa(PessoaFisica pessoa) {
 		this.pessoa = pessoa;
 	}
 	public String getDescricao() {
