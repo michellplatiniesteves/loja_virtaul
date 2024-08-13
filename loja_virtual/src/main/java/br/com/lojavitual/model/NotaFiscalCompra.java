@@ -2,7 +2,7 @@ package br.com.lojavitual.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.Objects;
 
 import javax.persistence.Column;
@@ -46,7 +46,7 @@ public class NotaFiscalCompra  implements Serializable{
 	private BigDecimal valorIcms;
 	@Column(nullable = false)
 	@Temporal(TemporalType.DATE)
-	private Date dataCompra;
+	private Calendar dataCompra;
 	@ManyToOne(targetEntity = PessoaJuridica.class)
 	@JoinColumn(name = "pessoa_id",nullable = false,foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT,name= "pessoa_fk"))
 	private PessoaJuridica pessoa;
@@ -108,10 +108,10 @@ public class NotaFiscalCompra  implements Serializable{
 	public void setValorIcms(BigDecimal valorIcms) {
 		this.valorIcms = valorIcms;
 	}
-	public Date getDataCompra() {
+	public Calendar getDataCompra() {
 		return dataCompra;
 	}
-	public void setDataCompra(Date dataCompra) {
+	public void setDataCompra(Calendar dataCompra) {
 		this.dataCompra = dataCompra;
 	}
 	public Pessoa getPessoa() {

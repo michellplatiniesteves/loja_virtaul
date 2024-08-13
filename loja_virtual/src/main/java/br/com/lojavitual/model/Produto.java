@@ -2,18 +2,22 @@ package br.com.lojavitual.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-import javax.management.loading.PrivateClassLoader;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ConstraintMode;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
@@ -80,6 +84,7 @@ public class Produto implements Serializable{
 	private Boolean alertaQtdeEstoque=Boolean.FALSE;
 	private Boolean ativo =Boolean.TRUE;
 	private Integer qtdClique =0;
+	
 	@ManyToOne(targetEntity = Pessoa.class)
 	@JoinColumn(name = "empresa_id",nullable = false,foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT,name= "empresa_fk"))
 	private PessoaJuridica empresa;
@@ -92,6 +97,8 @@ public class Produto implements Serializable{
 	@JoinColumn(name = "marca_produto_id",nullable=false, foreignKey=@ForeignKey(value=ConstraintMode.CONSTRAINT,name= "marca_produto_fk"))
 	private MarcaProduto marcaProduto;
 
+	@OneToMany(mappedBy = "produto",cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.LAZY)
+	private List<ImagemProduto>imagens = new ArrayList<ImagemProduto>();
 	
 	public void setMarcaProduto(MarcaProduto marcaProduto) {
 		this.marcaProduto = marcaProduto;
@@ -202,6 +209,16 @@ public class Produto implements Serializable{
 	public Boolean getAtivo() {
 		return ativo;
 	}
+	
+	public List<ImagemProduto> getImagens() {
+		return imagens;
+	}
+
+	public void setImagens(List<ImagemProduto> imagens) {
+		this.imagens = imagens;
+	}
+	
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
@@ -224,7 +241,7 @@ public class Produto implements Serializable{
 				+ ", valorVenda=" + valorVenda + ", qtdEstoque=" + qtdEstoque + ", qtdeAlertaEstoque="
 				+ qtdeAlertaEstoque + ", linkYoutube=" + linkYoutube + ", alertaQtdeEstoque=" + alertaQtdeEstoque
 				+ ", ativo=" + ativo + ", qtdClique=" + qtdClique + ", empresa=" + empresa + ", categoriaProduto="
-				+ categoriaProduto + ", marcaProduto=" + marcaProduto + "]";
+				+ categoriaProduto + ", marcaProduto=" + marcaProduto + ", imagens=" + imagens + "]";
 	}
 	
 	

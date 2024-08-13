@@ -2,7 +2,7 @@ package br.com.lojavitual.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.Objects;
 
 import javax.persistence.Column;
@@ -39,17 +39,17 @@ public class CupDesc implements Serializable {
 	
 	@Column(nullable = false)
 	@Temporal(TemporalType.DATE)
-	private Date dataValidadeCupom;
+	private Calendar dataValidadeCupom;
 	
-	@ManyToOne(targetEntity = Pessoa.class)
+	@ManyToOne(targetEntity = PessoaJuridica.class)
 	@JoinColumn(name = "empresa_id",nullable = false,foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT,name= "empresa_fk"))
-	private Pessoa empresa;
+	private PessoaJuridica empresa;
 	
-	public void setEmpresa(Pessoa empresa) {
+	public void setEmpresa(PessoaJuridica empresa) {
 		this.empresa = empresa;
 	}
 	
-	public Pessoa getEmpresa() {
+	public PessoaJuridica getEmpresa() {
 		return empresa;
 	}
 	public Long getId() {
@@ -84,11 +84,11 @@ public class CupDesc implements Serializable {
 		this.percPercentDesco = percPercentDesco;
 	}
 
-	public Date getDataValidadeCupom() {
+	public Calendar getDataValidadeCupom() {
 		return dataValidadeCupom;
 	}
 
-	public void setDataValidadeCupom(Date dataValidadeCupom) {
+	public void setDataValidadeCupom(Calendar dataValidadeCupom) {
 		this.dataValidadeCupom = dataValidadeCupom;
 	}
 

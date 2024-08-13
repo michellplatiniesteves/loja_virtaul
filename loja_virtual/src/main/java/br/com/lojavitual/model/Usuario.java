@@ -1,8 +1,8 @@
 package br.com.lojavitual.model;
 
 
+import java.util.Calendar;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -46,7 +46,7 @@ public class Usuario implements UserDetails{
 	
 	@Column(nullable = false)
 	@Temporal(TemporalType.DATE)
-	private Date dataAtualSenha;
+	private Calendar dataAtualSenha;
 	
 	@OneToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "usuario_acesso", uniqueConstraints = @UniqueConstraint(columnNames = {"usuario_id","acesso_id"},
@@ -98,11 +98,11 @@ public class Usuario implements UserDetails{
 		this.senha = senha;
 	}
 
-	public Date getDataAtualSenha() {
+	public Calendar getDataAtualSenha() {
 		return dataAtualSenha;
 	}
 
-	public void setDataAtualSenha(Date dataAtualSenha) {
+	public void setDataAtualSenha(Calendar dataAtualSenha) {
 		this.dataAtualSenha = dataAtualSenha;
 	}
 

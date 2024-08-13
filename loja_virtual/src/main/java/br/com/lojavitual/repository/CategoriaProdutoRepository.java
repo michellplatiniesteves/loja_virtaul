@@ -2,13 +2,13 @@ package br.com.lojavitual.repository;
 
 import java.util.List;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import br.com.lojavitual.model.CategoriaProduto;
 @Repository
-public interface CategoriaProdutoRepository extends CrudRepository<CategoriaProduto, Long>{
+public interface CategoriaProdutoRepository extends JpaRepository<CategoriaProduto, Long>{
 
 	@Query(value = "select cp from CategoriaProduto cp where upper(trim(cp.nomeDesc)) like %?1% ")
 	public List<CategoriaProduto> buscarProdutosPorDesc(String desc);

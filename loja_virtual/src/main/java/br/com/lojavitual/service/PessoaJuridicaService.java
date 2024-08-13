@@ -66,7 +66,7 @@ public class PessoaJuridicaService {
 				pessoaJuridica.getEnderecos().get(i).setComplemento(cepDTO.getComplemento());
 				pessoaJuridica.getEnderecos().get(i).setRuaLogra(cepDTO.getLogradouro());
 				pessoaJuridica.getEnderecos().get(i).setUf(cepDTO.getUf());
-				pessoaJuridica.getEnderecos().get(i).setPessoa(pessoaJuridica);
+				pessoaJuridica.getEnderecos().get(i).setPessoa(pessoaJuridica.getEnderecos().get(i).getPessoa());
 				pessoaJuridica.getEnderecos().get(i).setEmpresa(pessoaJuridica);
 			}
 		} 
@@ -79,7 +79,7 @@ public class PessoaJuridicaService {
 				jdbcTemplate.execute("begin;alter TABLE usuario_acesso drop constraint " + contraint + "commit;");
 			}
 			usuariopj = new Usuario();
-			usuariopj.setDataAtualSenha(Calendar.getInstance().getTime());
+			usuariopj.setDataAtualSenha(Calendar.getInstance());
 			usuariopj.setEmpresa(pessoaJuridica);
 			usuariopj.setPessoa(pessoaJuridica);
 			usuariopj.setLogin(pessoaJuridica.getEmail());
@@ -155,12 +155,12 @@ public class PessoaJuridicaService {
 				pessoaJuridica.getEnderecos().get(i).setComplemento(cepDTO.getComplemento());
 				pessoaJuridica.getEnderecos().get(i).setRuaLogra(cepDTO.getLogradouro());
 				pessoaJuridica.getEnderecos().get(i).setUf(cepDTO.getUf());
-				pessoaJuridica.getEnderecos().get(i).setPessoa(pessoaJuridica);
+				pessoaJuridica.getEnderecos().get(i).setPessoa(pessoaJuridica.getEnderecos().get(i).getPessoa());
 				pessoaJuridica.getEnderecos().get(i).setEmpresa(pessoaJuridica);
 
 			}else {
 				pessoaJuridica.getEnderecos().get(i).setEmpresa(pessoaJuridica);
-				pessoaJuridica.getEnderecos().get(i).setPessoa(pessoaJuridica);
+				pessoaJuridica.getEnderecos().get(i).setPessoa(pessoaJuridica.getEnderecos().get(i).getPessoa());
 			}
 		}
 		return pessoaJuridica = pessoaJuridicaRepository.save(pessoaJuridica);

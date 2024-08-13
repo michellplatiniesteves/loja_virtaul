@@ -19,6 +19,8 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name = "avaliacao_produto")
 @SequenceGenerator(sequenceName = "seq_avaliacao_produto", name = "seq_avaliacao_produto", allocationSize = 1, initialValue = 1)
@@ -36,10 +38,12 @@ public class AvaliacaoProduto implements Serializable {
 	@Column(nullable = false)
 	private Integer nota;
 
-	@ManyToOne(targetEntity = Pessoa.class)
+	@JsonIgnoreProperties(allowGetters = true)
+	@ManyToOne(targetEntity = PessoaFisica.class)
 	@JoinColumn(name = "pessoa_id", nullable = false, foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT, name = "pessoa_fk"))
-	private Pessoa pessoa;
+	private PessoaFisica pessoa;
 
+	@JsonIgnoreProperties(allowGetters = true)
 	@ManyToOne()
 	@JoinColumn(name = "produto_id", nullable = false, foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT, name = "produto_fk"))
 	private Produto produto;
@@ -49,16 +53,17 @@ public class AvaliacaoProduto implements Serializable {
 	@Column(nullable = false)
 	private String descricao;
 
-	@ManyToOne(targetEntity = Pessoa.class)
+	@JsonIgnoreProperties(allowGetters = true)
+	@ManyToOne(targetEntity = PessoaJuridica.class)
 	@JoinColumn(name = "empresa_id",nullable = false,foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT,name= "empresa_fk"))
-	private Pessoa empresa;
+	private PessoaJuridica empresa;
 	
 	
-	public Pessoa getEmpresa() {
+	public PessoaJuridica getEmpresa() {
 		return empresa;
 	}
 
-	public void setEmpresa(Pessoa empresa) {
+	public void setEmpresa(PessoaJuridica empresa) {
 		this.empresa = empresa;
 	}
 
@@ -86,11 +91,11 @@ public class AvaliacaoProduto implements Serializable {
 		this.nota = nota;
 	}
 
-	public Pessoa getPessoa() {
+	public PessoaFisica getPessoa() {
 		return pessoa;
 	}
 
-	public void setPessoa(Pessoa pessoa) {
+	public void setPessoa(PessoaFisica pessoa) {
 		this.pessoa = pessoa;
 	}
 

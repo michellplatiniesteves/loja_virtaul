@@ -20,6 +20,9 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name = "nota_fiscal_venda")
 @SequenceGenerator(sequenceName = "seq_nota_fiscal_venda", name = "seq_nota_fiscal_venda", allocationSize = 1, initialValue = 1)
@@ -40,25 +43,27 @@ public class NotaFiscalVenda  implements Serializable{
 	private String serie;
 	@Column(nullable = false)
 	private String tipo;
+	
+	@JsonIgnoreProperties(allowGetters = true)
 	@OneToOne
-	@JoinColumn(name = "venda_compra_loja_virt_id",nullable = false,foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT,name= "venda_compra_loja_virt_fk"))
+	@JoinColumn(name = "venda_compra_loja_virt_id",nullable = true,foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT,name= "venda_compra_loja_virt_fk"))
 	private VendaCompraLojaVirtual vendaCompraLojaVirtual;
 	@Column(columnDefinition = "text",nullable = false)
 	private String xml;
 	@Column(columnDefinition = "text",nullable = false)
 	private String pdf;
 	
-	@ManyToOne(targetEntity = Pessoa.class)
+	@ManyToOne(targetEntity = PessoaJuridica.class)
 	@JoinColumn(name = "empresa_id",nullable = false,foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT,name= "empresa_fk"))
-	private Pessoa empresa;
+	private PessoaJuridica empresa;
 	
-	public void setEmpresa(Pessoa empresa) {
+	public void setEmpresa(PessoaJuridica empresa) {
 		this.empresa = empresa;
 	}
 	public void setVendaCompraLojaVirtual(VendaCompraLojaVirtual vendaCompraLojaVirtual) {
 		this.vendaCompraLojaVirtual = vendaCompraLojaVirtual;
 	}
-	public Pessoa getEmpresa() {
+	public PessoaJuridica getEmpresa() {
 		return empresa;
 	}
 	public VendaCompraLojaVirtual getVendaCompraLojaVirtual() {

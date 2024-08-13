@@ -102,7 +102,7 @@ public class PessoaFisicaService {
 				jdbcTemplate.execute("begin;alter TABLE usuario_acesso drop constraint " + contraint + "commit;");
 			}
 			usuariopf = new Usuario();
-			usuariopf.setDataAtualSenha(Calendar.getInstance().getTime());
+			usuariopf.setDataAtualSenha(Calendar.getInstance());
 			usuariopf.setEmpresa(pessoaFisica.getEmpresa());
 			usuariopf.setPessoa(pessoaFisica);
 			usuariopf.setLogin(pessoaFisica.getEmail());
@@ -154,5 +154,9 @@ public class PessoaFisicaService {
 	public PessoaFisica existeCpfPessoaFisica(PessoaFisica pessoaFisica) {
 		pessoaFisica = pessoaFisicaRepository.existeCpfPessoaFisica(pessoaFisica.getCpf());
 		return pessoaFisica;
+	}
+	
+	public Boolean existePessoaFisica(Long id) {
+		return pessoaFisicaRepository.existsById(id);
 	}
 }

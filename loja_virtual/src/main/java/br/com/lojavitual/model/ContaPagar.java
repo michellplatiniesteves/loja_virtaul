@@ -2,6 +2,7 @@ package br.com.lojavitual.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
 
@@ -57,10 +58,10 @@ public class ContaPagar implements Serializable {
 	
 	@Column(nullable = false)
 	@Temporal(TemporalType.DATE)
-	private Date dtVencimento;
+	private Calendar dtVencimento;
 
 	@Temporal(TemporalType.DATE)
-	private Date dtPagamento;
+	private Calendar dtPagamento;
 
 	@Column(nullable = false)
 	private BigDecimal valorTotal;
@@ -108,16 +109,16 @@ public class ContaPagar implements Serializable {
 	public void setStatusContPagar(StatusContaPagar statusContPagar) {
 		this.statusContPagar = statusContPagar;
 	}
-	public Date getDtVencimento() {
+	public Calendar getDtVencimento() {
 		return dtVencimento;
 	}
-	public void setDtVencimento(Date dtVencimento) {
+	public void setDtVencimento(Calendar dtVencimento) {
 		this.dtVencimento = dtVencimento;
 	}
-	public Date getDtPagamento() {
+	public Calendar getDtPagamento() {
 		return dtPagamento;
 	}
-	public void setDtPagamento(Date dtPagamento) {
+	public void setDtPagamento(Calendar dtPagamento) {
 		this.dtPagamento = dtPagamento;
 	}
 	public BigDecimal getValorTotal() {
