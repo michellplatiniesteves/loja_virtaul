@@ -1,10 +1,15 @@
 package br.com.lojavitual.service;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 
 import br.com.lojavitual.DTO.AvaliacaoProdutoDTO;
 import br.com.lojavitual.excecoes.ExceptionMentoriaJava;
@@ -20,18 +25,30 @@ public class AvaliacaoProdutoService {
 	@Autowired
 	private PessoaFisicaService pessoaFisicaService;
 
-	public List<AvaliacaoProduto> buscaAvaliacaoPessoa(Long idPessoa) {
+	@Autowired
+	private ModelMapper modelMapper;
+	
+	public List<AvaliacaoProdutoDTO> buscaAvaliacaoPessoa(Long idPessoa) {
 
-		List<AvaliacaoProduto>listabuscaAvaliacaoPessoa = avaliacaoProdutoRepository.buscaAvaliacaoPessoa(idPessoa);
-		return  listabuscaAvaliacaoPessoa;
+		List<AvaliacaoProduto> buscaAvaliacaoPessoa = avaliacaoProdutoRepository.buscaAvaliacaoPessoa(idPessoa); 
+		AvaliacaoProdutoDTO dto = new AvaliacaoProdutoDTO();
+	    List<AvaliacaoProdutoDTO>listadto = new ArrayList<>();
+		for (AvaliacaoProduto avaliacaoProduto : buscaAvaliacaoPessoa) {
+			
+			listadto.add(dto.coverterDto(avaliacaoProduto));
+		}
+		return listadto;
+
 	}
 
 	public List<AvaliacaoProduto> buscaAvaliacaoProduto(Long idProduto) {
+		
 		List<AvaliacaoProduto>listabuscaAvaliacaoProduto = avaliacaoProdutoRepository.buscaAvaliacaoProduto(idProduto);
 		return listabuscaAvaliacaoProduto;
 	}
 
 	public List<AvaliacaoProduto> buscaAvaliacaoProdutoPorPessoa(Long idProduto, Long idPessoa) {
+
 		List<AvaliacaoProduto>listabuscaAvaliacaoProdutoPorPessoa = avaliacaoProdutoRepository.buscaAvaliacaoProdutoPorPessoa(idProduto,idPessoa);
 		return listabuscaAvaliacaoProdutoPorPessoa;
 	}
@@ -47,7 +64,9 @@ public class AvaliacaoProdutoService {
 
 	}
 
-	public AvaliacaoProduto salvarAvaliacaoProduto(AvaliacaoProduto avaliacaoProduto) throws ExceptionMentoriaJava {
+	public AvaliacaoProdutoDTO salvarAvaliacaoProduto(AvaliacaoProduto avaliacaoProduto) throws ExceptionMentoriaJava {
+		ModelMapper mapper = new ModelMapper();
+		AvaliacaoProdutoDTO avaliacaoProdutoDTO = new AvaliacaoProdutoDTO();
 		if(avaliacaoProduto == null) {
 			throw new ExceptionMentoriaJava("Informe a Avaliacao Produto");
 		}
@@ -61,6 +80,7 @@ public class AvaliacaoProdutoService {
 			throw new ExceptionMentoriaJava("Informe o Produto");
 		}
 		avaliacaoProduto = avaliacaoProdutoRepository.save(avaliacaoProduto);
-		return avaliacaoProduto;
+		avaliacaoProdutoDTO = mapper.map(avaliacaoProduto, avaliacaoProdutoDTO.getClass());
+		return avaliacaoProdutoDTO;
 	}
 }

@@ -14,6 +14,9 @@ public interface VendaCompraLojaVirtualRepository extends JpaRepository<VendaCom
 	@Query(value = "select vclv from VendaCompraLojaVirtual vclv where vclv.pessoa.id = ?1")
 	List<VendaCompraLojaVirtual> buscarVendaCompraLojaVirtualPorPessoa(Long id);
 	
+	@Query( value=" select vclv from VendaCompraLojaVirtual vclv  where vclv.id = ?1 ")
+	VendaCompraLojaVirtual buscarVendaCompraLojaVirtualPorId(Long id);
+	
     @Query(value = "select vclv from VendaCompraLojaVirtual vclv where vclv.empresa.id= ?1")
 	List<VendaCompraLojaVirtual> buscarVendaCompraLojaVirtualPorEmpresa(Long id);
 

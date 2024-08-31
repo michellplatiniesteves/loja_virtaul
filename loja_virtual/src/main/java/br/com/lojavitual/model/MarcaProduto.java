@@ -17,6 +17,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name = "marca_produto")
 @SequenceGenerator(sequenceName = "seq_marca_produto",name = "seq_marca_produto",allocationSize = 1,initialValue = 1)
@@ -47,7 +49,8 @@ public class MarcaProduto  implements Serializable{
 	public void setNomeDesc(String nomeDesc) {
 		this.nomeDesc = nomeDesc;
 	}
-	@ManyToOne(targetEntity = Pessoa.class)
+	
+	@ManyToOne(targetEntity = PessoaJuridica.class)
 	@JoinColumn(name = "empresa_id",nullable = false,foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT,name= "empresa_fk"))
 	private PessoaJuridica empresa;
 	
@@ -55,7 +58,7 @@ public class MarcaProduto  implements Serializable{
 		this.empresa = empresa;
 	}
 	
-	public Pessoa getEmpresa() {
+	public PessoaJuridica getEmpresa() {
 		return empresa;
 	}
 	

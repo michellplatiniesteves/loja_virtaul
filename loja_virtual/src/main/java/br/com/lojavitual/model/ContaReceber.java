@@ -24,6 +24,8 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import br.com.lojavitual.enums.StatusContaReceber;
 
 @Entity
@@ -39,9 +41,10 @@ public class ContaReceber implements Serializable {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_conta_receber")
 	private Long id;
 
-	@ManyToOne(targetEntity = Pessoa.class)
+	
+	@ManyToOne(targetEntity = PessoaFisica.class)
 	@JoinColumn(name = "pessoa_id", nullable = false, foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT, name = "pessoa_fk"))
-	private Pessoa pessoa;
+	private PessoaFisica pessoa;
 	
 	@NotNull(message = "Informe a descrição")
 	@NotEmpty(message = "Informe a descrição")
@@ -63,14 +66,15 @@ public class ContaReceber implements Serializable {
 	
 	private BigDecimal valorDesconto;
 	
-	@ManyToOne(targetEntity = Pessoa.class)
-	@JoinColumn(name = "empresa_id",nullable = false,foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT,name= "empresa_fk"))
-	private Pessoa empresa;
 	
-	public void setEmpresa(Pessoa empresa) {
+	@ManyToOne(targetEntity = PessoaJuridica.class)
+	@JoinColumn(name = "empresa_id",nullable = false,foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT,name= "empresa_fk"))
+	private PessoaJuridica empresa;
+	
+	public void setEmpresa(PessoaJuridica empresa) {
 		this.empresa = empresa;
 	}
-	public Pessoa getEmpresa() {
+	public PessoaJuridica getEmpresa() {
 		return empresa;
 	}
 	public Long getId() {
@@ -79,10 +83,10 @@ public class ContaReceber implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public Pessoa getPessoa() {
+	public PessoaFisica getPessoa() {
 		return pessoa;
 	}
-	public void setPessoa(Pessoa pessoa) {
+	public void setPessoa(PessoaFisica pessoa) {
 		this.pessoa = pessoa;
 	}
 	public String getDescricao() {

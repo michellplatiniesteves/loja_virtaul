@@ -25,6 +25,8 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name = "produto")
 @SequenceGenerator(sequenceName = "seq_produto", name = "seq_produto", allocationSize = 1, initialValue = 1)
@@ -85,17 +87,21 @@ public class Produto implements Serializable{
 	private Boolean ativo =Boolean.TRUE;
 	private Integer qtdClique =0;
 	
-	@ManyToOne(targetEntity = Pessoa.class)
+	
+	@ManyToOne(targetEntity = PessoaJuridica.class)
 	@JoinColumn(name = "empresa_id",nullable = false,foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT,name= "empresa_fk"))
 	private PessoaJuridica empresa;
 	
+
 	@ManyToOne(targetEntity=CategoriaProduto.class)
 	@JoinColumn(name = "categoria_produto_id",nullable=false, foreignKey=@ForeignKey(value=ConstraintMode.CONSTRAINT,name= "categoria_produto_fk"))
 	private CategoriaProduto categoriaProduto;
 	
+
 	@ManyToOne(targetEntity= MarcaProduto.class)
 	@JoinColumn(name = "marca_produto_id",nullable=false, foreignKey=@ForeignKey(value=ConstraintMode.CONSTRAINT,name= "marca_produto_fk"))
 	private MarcaProduto marcaProduto;
+	
 
 	@OneToMany(mappedBy = "produto",cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.LAZY)
 	private List<ImagemProduto>imagens = new ArrayList<ImagemProduto>();

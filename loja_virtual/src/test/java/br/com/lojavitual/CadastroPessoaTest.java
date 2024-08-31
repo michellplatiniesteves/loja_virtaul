@@ -69,7 +69,7 @@ public class CadastroPessoaTest extends TestCase {
      PessoaFisica pessoaFisica = new PessoaFisica();
      
      pessoaFisica.setCpf("709.884.410-12");
-     pessoaFisica.setDataNascimento(Calendar.getInstance().getTime());
+     pessoaFisica.setDataNascimento(Calendar.getInstance());
      pessoaFisica.setEmail("fsdfsfsdfds@gfgdgdfg.com.br");
      pessoaFisica.setEmpresa(pessoaJuridica);
      pessoaFisica.setNome("daasdsadsad");

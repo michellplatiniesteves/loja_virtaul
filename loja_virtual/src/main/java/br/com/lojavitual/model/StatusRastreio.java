@@ -12,9 +12,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 
 @Entity
 @Table(name = "status_rastreio")
@@ -33,16 +37,21 @@ public class StatusRastreio implements Serializable{
 	private String status;
 	@Column(nullable = false)
 	private String centroDistribuicao;
+	
+	@JsonIgnore
 	@ManyToOne(targetEntity =VendaCompraLojaVirtual.class )
 	@JoinColumn(name = "venda_compra_loja_virt_id",nullable = false,foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT,name= "venda_compra_loja_virt_fk"))
 	private VendaCompraLojaVirtual vendaCompraLojaVirtual;
-	@ManyToOne(targetEntity = Pessoa.class)
+	
+	
+	@ManyToOne(targetEntity = PessoaJuridica.class)
 	@JoinColumn(name = "empresa_id",nullable = false,foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT,name= "empresa_fk"))
-	private Pessoa empresa;
-	public void setEmpresa(Pessoa empresa) {
+	private PessoaJuridica empresa;
+	
+	public void setEmpresa(PessoaJuridica empresa) {
 		this.empresa = empresa;
 	}
-	public Pessoa getEmpresa() {
+	public PessoaJuridica getEmpresa() {
 		return empresa;
 	}
 	public void setVendaCompraLojaVirtual(VendaCompraLojaVirtual vendaCompraLojaVirtual) {

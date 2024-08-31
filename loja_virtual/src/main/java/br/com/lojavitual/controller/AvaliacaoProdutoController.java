@@ -30,10 +30,10 @@ public class AvaliacaoProdutoController {
 	
 	@ResponseBody
 	@GetMapping(value = "buscaAvaliacaoPessoa/{idPessoa}")
-	public ResponseEntity<List<AvaliacaoProduto>>buscaAvaliacaoPessoa(@PathVariable("idPessoa")Long idPessoa){
+	public ResponseEntity<List<AvaliacaoProdutoDTO>>buscaAvaliacaoPessoa(@PathVariable("idPessoa")Long idPessoa){
 	
-		List<AvaliacaoProduto>listabuscaAvaliacaoPessoa=avaliacaoProdutoService.buscaAvaliacaoPessoa(idPessoa);
-		return new ResponseEntity<List<AvaliacaoProduto>>(listabuscaAvaliacaoPessoa,HttpStatus.OK);
+		List<AvaliacaoProdutoDTO>listabuscaAvaliacaoPessoa=avaliacaoProdutoService.buscaAvaliacaoPessoa(idPessoa);
+		return new ResponseEntity<List<AvaliacaoProdutoDTO>>(listabuscaAvaliacaoPessoa,HttpStatus.OK);
 	}
 	
 	@ResponseBody
@@ -61,9 +61,9 @@ public class AvaliacaoProdutoController {
 	
 	@ResponseBody
 	@PostMapping(value = "salvarAvaliacaoProduto")
-	public ResponseEntity<AvaliacaoProduto>salvarAvaliacaoProduto(@RequestBody @Valid AvaliacaoProduto avaliacaoProduto) throws ExceptionMentoriaJava{
-	
-		avaliacaoProduto = avaliacaoProdutoService.salvarAvaliacaoProduto(avaliacaoProduto);
-		return new ResponseEntity<AvaliacaoProduto>(avaliacaoProduto,HttpStatus.OK);
+	public ResponseEntity<AvaliacaoProdutoDTO>salvarAvaliacaoProduto(@RequestBody @Valid AvaliacaoProduto avaliacaoProduto) throws ExceptionMentoriaJava{
+		AvaliacaoProdutoDTO avaliacaoProdutoDTO = new AvaliacaoProdutoDTO();
+		avaliacaoProdutoDTO = avaliacaoProdutoService.salvarAvaliacaoProduto(avaliacaoProduto);
+		return new ResponseEntity<AvaliacaoProdutoDTO>(avaliacaoProdutoDTO,HttpStatus.OK);
 	}
 }

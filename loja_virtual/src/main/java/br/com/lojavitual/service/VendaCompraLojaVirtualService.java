@@ -1,23 +1,58 @@
 package br.com.lojavitual.service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.lojavitual.DTO.VendaCompraLojaVirtualDTO;
+import br.com.lojavitual.controller.NotaFiscalVendaController;
+import br.com.lojavitual.controller.PessoaFisicaController;
+import br.com.lojavitual.excecoes.ExceptionMentoriaJava;
+import br.com.lojavitual.model.Endereco;
 import br.com.lojavitual.model.NotaFiscalVenda;
+import br.com.lojavitual.model.PessoaFisica;
 import br.com.lojavitual.model.VendaCompraLojaVirtual;
+import br.com.lojavitual.repository.EnderecoRepository;
 import br.com.lojavitual.repository.VendaCompraLojaVirtualRepository;
 
 @Service
 public class VendaCompraLojaVirtualService {
 
 	@Autowired
-	VendaCompraLojaVirtualRepository vendaCompraLojaVirtualRepository;
+	private VendaCompraLojaVirtualRepository vendaCompraLojaVirtualRepository;
 
-	public VendaCompraLojaVirtual salvarVendaCompraLojaVirtual(VendaCompraLojaVirtual vendaCompraLojaVirtual) {
+	@Autowired
+	private EnderecoRepository enderecoRepository;
+	
+	@Autowired
+	private PessoaFisicaController pessoaFisicaController;
+	@Autowired
+	private NotaFiscalVendaController notaFiscalVendaController ;
+	
+	public VendaCompraLojaVirtualDTO salvarVendaCompraLojaVirtual(VendaCompraLojaVirtual vendaCompraLojaVirtual) throws ExceptionMentoriaJava {
+		
+		PessoaFisica pessoaFisica = pessoaFisicaController.salvarPessoaFisica(vendaCompraLojaVirtual.getPessoa()).getBody();
+		Endereco enderecocob = enderecoRepository.save(vendaCompraLojaVirtual.getEnderecoCobranca());
+		vendaCompraLojaVirtual.setEnderecoCobranca(enderecocob);
+		vendaCompraLojaVirtual.getPessoa().setEmpresa(vendaCompraLojaVirtual.getEmpresa());
+		vendaCompraLojaVirtual.setPessoa(pessoaFisica);
+		vendaCompraLojaVirtual.getEnderecoCobranca().setPessoa(pessoaFisica);
+		vendaCompraLojaVirtual.getEnderecoCobranca().setEmpresa(vendaCompraLojaVirtual.getEmpresa());
+		
+		Endereco enderecoent = enderecoRepository.save(vendaCompraLojaVirtual.getEnderecoEntrega());
+		vendaCompraLojaVirtual.setEnderecoEntrega(enderecoent);
+		vendaCompraLojaVirtual.getEnderecoEntrega().setPessoa(pessoaFisica);
+		vendaCompraLojaVirtual.getEnderecoEntrega().setEmpresa(vendaCompraLojaVirtual.getEmpresa());
 		vendaCompraLojaVirtual = vendaCompraLojaVirtualRepository.saveAndFlush(vendaCompraLojaVirtual);
-		return vendaCompraLojaVirtual;
+
+		vendaCompraLojaVirtual.getNotaFiscalVenda().setVendaCompraLojaVirtual(vendaCompraLojaVirtual);
+		notaFiscalVendaController.salvarNotaFiscalVenda(vendaCompraLojaVirtual.getNotaFiscalVenda());
+		VendaCompraLojaVirtualDTO dto = new VendaCompraLojaVirtualDTO();
+		dto.converter(vendaCompraLojaVirtual);
+		return dto;
 	}
 
 	public String deletarVendaCompraLojaVirtual(Long id) {
@@ -31,11 +66,11 @@ public class VendaCompraLojaVirtualService {
 
 		return msg;
 	}
-
-	public List<VendaCompraLojaVirtual> buscarVendaCompraLojaVirtualPorId(Long id) {
-		List<VendaCompraLojaVirtual> listabuscarVendaCompraLojaVirtualPorId = (List<VendaCompraLojaVirtual>) vendaCompraLojaVirtualRepository
-				.findById(id).get();
-		return listabuscarVendaCompraLojaVirtualPorId;
+	public VendaCompraLojaVirtualDTO  buscarVendaCompraLojaVirtualPorId(Long id) {
+		VendaCompraLojaVirtualDTO dto = new VendaCompraLojaVirtualDTO();
+		VendaCompraLojaVirtual listabuscarVendaCompraLojaVirtualPorId =  vendaCompraLojaVirtualRepository.findById(id).get();
+		return dto.converter(listabuscarVendaCompraLojaVirtualPorId);
+		 
 	}
 
 	public List<VendaCompraLojaVirtual> buscarVendaCompraLojaVirtualPorPessoa(Long id) {

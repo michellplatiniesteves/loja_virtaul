@@ -41,7 +41,7 @@ public class PessoaJuridica extends Pessoa {
 	
 	@NotNull(message = "Informe a razaoSocial")
 	@NotEmpty(message = "Informe a razaoSocial")
-	@Column(nullable = false)
+    @Column(nullable = false)
 	private String razaoSocial;
 	
 	@Column(nullable = false)

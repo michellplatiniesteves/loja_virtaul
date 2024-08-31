@@ -19,6 +19,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name = "nota_fiscal_compra")
 @SequenceGenerator(sequenceName = "seq_nota_fiscal_compra", name = "seq_nota_fiscal_compra", allocationSize = 1, initialValue = 1)
@@ -47,12 +49,16 @@ public class NotaFiscalCompra  implements Serializable{
 	@Column(nullable = false)
 	@Temporal(TemporalType.DATE)
 	private Calendar dataCompra;
-	@ManyToOne(targetEntity = PessoaJuridica.class)
+	
+	
+	@ManyToOne(targetEntity = PessoaFisica.class)
 	@JoinColumn(name = "pessoa_id",nullable = false,foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT,name= "pessoa_fk"))
-	private PessoaJuridica pessoa;
-	@ManyToOne()
+	private PessoaFisica pessoa;
+	
+	@ManyToOne
 	@JoinColumn(name = "conta_pagar_id",nullable = false,foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT,name= "conta_pagar_fk"))
 	private ContaPagar contaPagar;
+	
 	
 	@ManyToOne(targetEntity = PessoaJuridica.class)
 	@JoinColumn(name = "empresa_id",nullable = false,foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT,name= "empresa_fk"))
@@ -62,7 +68,7 @@ public class NotaFiscalCompra  implements Serializable{
 		this.empresa = empresa;
 	}
 	
-	public Pessoa getEmpresa() {
+	public PessoaJuridica getEmpresa() {
 		return empresa;
 	}
 	
@@ -114,10 +120,10 @@ public class NotaFiscalCompra  implements Serializable{
 	public void setDataCompra(Calendar dataCompra) {
 		this.dataCompra = dataCompra;
 	}
-	public Pessoa getPessoa() {
+	public PessoaFisica getPessoa() {
 		return pessoa;
 	}
-	public void setPessoa(PessoaJuridica pessoa) {
+	public void setPessoa(PessoaFisica pessoa) {
 		this.pessoa = pessoa;
 	}
 	public ContaPagar getContaPagar() {

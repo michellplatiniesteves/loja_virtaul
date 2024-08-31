@@ -3,6 +3,10 @@ package br.com.lojavitual.DTO;
 import java.io.Serializable;
 import java.util.Objects;
 
+import br.com.lojavitual.model.AvaliacaoProduto;
+import br.com.lojavitual.model.PessoaFisica;
+import br.com.lojavitual.model.PessoaJuridica;
+
 public class AvaliacaoProdutoDTO implements Serializable{
 
 	/**
@@ -11,10 +15,24 @@ public class AvaliacaoProdutoDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private Long id;
 	private Integer nota;
-	private Long pessoa;
-	private Long produto;
-	private Long empresa;
+	private Long idpessoaFisica;
+	private Long idproduto;
+	private Long idempresa;
 	private String descricao;
+	
+	
+	public AvaliacaoProdutoDTO coverterDto(AvaliacaoProduto avaliacaoProduto) {
+		AvaliacaoProdutoDTO dto = new AvaliacaoProdutoDTO();
+		dto.setId(avaliacaoProduto.getId());
+		dto.setNota(avaliacaoProduto.getNota());
+		dto.setDescricao(avaliacaoProduto.getDescricao());
+		dto.setidempresa(avaliacaoProduto.getEmpresa().getId());
+		dto.setidproduto(avaliacaoProduto.getProduto().getId());
+		dto.setidpessoaFisica(avaliacaoProduto.getPessoa().getId());
+		
+		return dto;
+	} 
+		
 	public Long getId() {
 		return id;
 	}
@@ -27,23 +45,23 @@ public class AvaliacaoProdutoDTO implements Serializable{
 	public void setNota(Integer nota) {
 		this.nota = nota;
 	}
-	public Long getPessoa() {
-		return pessoa;
+	public Long getidpessoaFisica() {
+		return idpessoaFisica;
 	}
-	public void setPessoa(Long pessoa) {
-		this.pessoa = pessoa;
+	public void setidpessoaFisica(Long idpessoaFisica) {
+		this.idpessoaFisica = idpessoaFisica;
 	}
-	public Long getProduto() {
-		return produto;
+	public Long getidproduto() {
+		return idproduto;
 	}
-	public void setProduto(Long produto) {
-		this.produto = produto;
+	public void setidproduto(Long idproduto) {
+		this.idproduto = idproduto;
 	}
-	public Long getEmpresa() {
-		return empresa;
+	public Long getidempresa() {
+		return idempresa;
 	}
-	public void setEmpresa(Long empresa) {
-		this.empresa = empresa;
+	public void setidempresa(Long idempresa) {
+		this.idempresa = idempresa;
 	}
 	public String getDescricao() {
 		return descricao;
@@ -68,9 +86,10 @@ public class AvaliacaoProdutoDTO implements Serializable{
 	}
 	@Override
 	public String toString() {
-		return "AvaliacaoProdutoDTO [id=" + id + ", nota=" + nota + ", pessoa=" + pessoa + ", produto=" + produto
-				+ ", empresa=" + empresa + ", descricao=" + descricao + "]";
+		return "AvaliacaoProdutoDTO [id=" + id + ", nota=" + nota + ", idpessoaFisica=" + idpessoaFisica
+				+ ", idproduto=" + idproduto + ", idempresa=" + idempresa + ", descricao=" + descricao + "]";
 	}
+
 	
 	
 }

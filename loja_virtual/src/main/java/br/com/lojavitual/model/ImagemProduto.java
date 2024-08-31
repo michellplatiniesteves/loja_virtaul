@@ -36,12 +36,12 @@ public class ImagemProduto implements Serializable {
 	@Column(columnDefinition = "text",nullable = false)
 	private String imagemMiniatura;
 	
-	@JsonIgnoreProperties(allowGetters = true)
+	
 	@ManyToOne(targetEntity = Produto.class)
 	@JoinColumn(name = "produto_id",nullable = false,foreignKey = @ForeignKey(name ="produto_fk",value = ConstraintMode.CONSTRAINT))
 	private Produto produto;
 
-	@JsonIgnoreProperties(allowGetters = true)
+	
 	@ManyToOne(targetEntity = PessoaJuridica.class)
 	@JoinColumn(name = "empresa_id",nullable = false,foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT,name= "empresa_fk"))
 	private PessoaJuridica empresa;

@@ -17,6 +17,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name = "forma_pagamento")
 @SequenceGenerator(sequenceName = "seq_forma_pagamento", name = "seq_forma_pagamento", allocationSize = 1, initialValue = 1)
@@ -35,6 +37,7 @@ public class FormaPagamento implements Serializable {
 	@Column(nullable = false)
 	private String descricao;
 
+	
 	@ManyToOne(targetEntity = PessoaJuridica.class)
 	@JoinColumn(name = "empresa_id",nullable = false,foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT,name= "empresa_fk"))
 	private PessoaJuridica empresa;

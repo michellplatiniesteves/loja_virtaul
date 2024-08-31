@@ -16,6 +16,8 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name = "item_venda_loja")
 @SequenceGenerator(sequenceName = "seq_item_venda_loja", name = "seq_item_venda_loja", allocationSize = 1, initialValue = 1)
@@ -32,23 +34,26 @@ public class ItemVendaLoja implements Serializable{
 	@Min(1)
 	@Column(nullable = false)
 	private Double quantidade;
+	
 	@ManyToOne
 	@JoinColumn(name = "venda_compra_loja_virt_id",nullable = false,foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT,name= "venda_compra_loja_virt_fk"))
 	private VendaCompraLojaVirtual vendaCompraLojaVirtual;
 	
-	@ManyToOne(targetEntity = Produto.class)
+
+	@ManyToOne
 	@JoinColumn(name = "produto_id",nullable = false,foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT,name= "produto_fk"))
 	private Produto produto;
 
-	@ManyToOne(targetEntity = Pessoa.class)
-	@JoinColumn(name = "empresa_id",nullable = false,foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT,name= "empresa_fk"))
-	private Pessoa empresa;
 	
-	public void setEmpresa(Pessoa empresa) {
+	@ManyToOne(targetEntity = PessoaJuridica.class)
+	@JoinColumn(name = "empresa_id",nullable = false,foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT,name= "empresa_fk"))
+	private PessoaJuridica empresa;
+	
+	public void setEmpresa(PessoaJuridica empresa) {
 		this.empresa = empresa;
 	}
 	
-	public Pessoa getEmpresa() {
+	public PessoaJuridica getEmpresa() {
 		return empresa;
 	}
 	

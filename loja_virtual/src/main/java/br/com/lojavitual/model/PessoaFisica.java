@@ -1,5 +1,6 @@
 package br.com.lojavitual.model;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
 
@@ -31,7 +32,7 @@ public class PessoaFisica extends Pessoa {
 	
 	@Column(nullable = false)
 	@Temporal(TemporalType.DATE)
-	private Date dataNascimento;
+	private Calendar dataNascimento;
 
 	public String getCpf() {
 		return cpf;
@@ -41,11 +42,11 @@ public class PessoaFisica extends Pessoa {
 		this.cpf = cpf;
 	}
 
-	public Date getDataNascimento() {
+	public Calendar getDataNascimento() {
 		return dataNascimento;
 	}
 
-	public void setDataNascimento(Date dataNascimento) {
+	public void setDataNascimento(Calendar dataNascimento) {
 		this.dataNascimento = dataNascimento;
 	}
 

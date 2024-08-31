@@ -12,7 +12,7 @@ import br.com.lojavitual.model.AvaliacaoProduto;
 public interface AvaliacaoProdutoRepository extends JpaRepository<AvaliacaoProduto, Long> {
 
 	@Query(value = "select ap from AvaliacaoProduto ap where ap.pessoa.id = ?1 ")
-	public List<AvaliacaoProduto>buscaAvaliacaoPessoa(Long idPessoa);
+	public List<AvaliacaoProduto> buscaAvaliacaoPessoa(Long idPessoa);
 	
 	@Query(value = "select ap from AvaliacaoProduto ap where ap.produto.id = ?1 and ap.pessoa.id = ?2 ")
 	public List<AvaliacaoProduto>buscaAvaliacaoProdutoPorPessoa(Long idProduto,Long idPessoa);
