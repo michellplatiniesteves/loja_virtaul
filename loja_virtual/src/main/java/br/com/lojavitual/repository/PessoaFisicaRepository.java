@@ -9,10 +9,10 @@ import br.com.lojavitual.model.PessoaFisica;
 
 public interface PessoaFisicaRepository extends CrudRepository<PessoaFisica, Long> {
 	
-	@Query(value = "select pf from PessoaFisica pf where pf.cpf= ?1 ",nativeQuery=true)
+	@Query(value = "select pf from PessoaFisica pf where pf.cpf= ?1 ")
 	public PessoaFisica existeCpfPessoaFisica(String cpf);
 	
-	@Query(value = "select pf from PessoaFisica pf where pf.cpf= ?1 ",nativeQuery=true)
+	@Query(value = "select pf from PessoaFisica pf where pf.cpf= ?1 ")
 	public List<PessoaFisica> listaCpfPessoaFisica(String cpf);
 	
 	@Query(value = "select pf from PessoaFisica pf where upper(trim(pf.nome)) like %?1% ",nativeQuery=true)

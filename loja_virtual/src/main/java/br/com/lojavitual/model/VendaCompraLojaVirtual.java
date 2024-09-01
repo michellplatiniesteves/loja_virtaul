@@ -102,7 +102,7 @@ public class VendaCompraLojaVirtual implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date dataEntrega;
 
-	@JsonIgnoreProperties(allowGetters = true)
+
 	@NotNull(message = "A empresa dona do registro deve ser informada")
 	@ManyToOne(targetEntity = PessoaJuridica.class)
 	@JoinColumn(name = "empresa_id", nullable = false, foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT, name = "empresa_id_fk"))

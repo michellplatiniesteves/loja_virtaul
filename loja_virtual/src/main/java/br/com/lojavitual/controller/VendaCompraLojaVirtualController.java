@@ -40,6 +40,12 @@ public class VendaCompraLojaVirtualController {
 		return new ResponseEntity<String>(msg,HttpStatus.OK);
 	}
 	@ResponseBody
+	@DeleteMapping(value = "deletarVendaCompraLojaVirtualEncadeado/{id}")
+	public ResponseEntity<String>deletarVendaCompraLojaVirtualEncadeado(@PathVariable("id")Long id){
+         String msg = vendaCompraLojaVirtualService.deletarVendaCompraLojaVirtualEncadeado(id);
+		return new ResponseEntity<String>(msg,HttpStatus.OK);
+	}
+	@ResponseBody
 	@GetMapping(value = "buscarVendaCompraLojaVirtualPorId/{id}")
 	public ResponseEntity<VendaCompraLojaVirtualDTO>buscarVendaCompraLojaVirtualPorId(@PathVariable("id")Long id){
 		VendaCompraLojaVirtualDTO listabuscarVendaCompraLojaVirtualPorId = vendaCompraLojaVirtualService.buscarVendaCompraLojaVirtualPorId(id);

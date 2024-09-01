@@ -78,7 +78,8 @@ public class PessoaFisicaService {
 		if (!ValidaCPF.isCPF(pessoaFisica.getCpf())) {
 			throw new ExceptionMentoriaJava("CPF invlido");
 		}
-		PessoaJuridica pessoaJuridica = pessoaJuridicaRepository.existeCnpj("4546544464565471");
+		//PessoaJuridica pessoaJuridica = pessoaJuridicaRepository.existeCnpj("4546544464565471");
+		//pessoaFisica.setEmpresa(pessoaJuridica);
 		if (pessoaFisica.getId() == null || pessoaFisica.getId() <= 0) {
 			for (int i = 0; i < pessoaFisica.getEnderecos().size(); i++) {
 				CepDTO cepDTO = utilitaria.consultaCep(pessoaFisica.getEnderecos().get(i).getCep());
@@ -89,8 +90,9 @@ public class PessoaFisicaService {
 				pessoaFisica.getEnderecos().get(i).setRuaLogra(cepDTO.getLogradouro());
 				pessoaFisica.getEnderecos().get(i).setUf(cepDTO.getUf());
 				pessoaFisica.getEnderecos().get(i).setPessoa(pessoaFisica);
-				pessoaFisica.getEnderecos().get(i).setEmpresa(pessoaJuridica);
+				pessoaFisica.getEnderecos().get(i).setEmpresa(pessoaFisica.getEmpresa());
 			}
+			
 		}
 
 		pessoaFisica = pessoaFisicaRepository.save(pessoaFisica);
