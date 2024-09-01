@@ -47,6 +47,8 @@ public class VendaCompraLojaVirtualDTO implements Serializable {
 	private EnderecoDTO entrega = new EnderecoDTO();
 
 	private BigDecimal valorFrete = BigDecimal.ZERO;
+	
+	private Boolean excluido;
 
 	private List<ItemVendaDTO> itemVendaLoja = new ArrayList<ItemVendaDTO>();
 
@@ -121,12 +123,19 @@ public class VendaCompraLojaVirtualDTO implements Serializable {
 		return valorTotal;
 	}
 
+	public void setExcluido(Boolean excluido) {
+		this.excluido = excluido;
+	}
+	public Boolean getExcluido() {
+		return excluido;
+	}
 	public VendaCompraLojaVirtualDTO converter(VendaCompraLojaVirtual vendaCompraLojaVirtual) {
 		VendaCompraLojaVirtualDTO dto = new VendaCompraLojaVirtualDTO();
 		dto.setId(vendaCompraLojaVirtual.getId());
 		 dto.setCobranca(cobranca.converter(vendaCompraLojaVirtual.getEnderecoCobranca()));
 		 dto.setEntrega(entrega.converter(vendaCompraLojaVirtual.getEnderecoEntrega()));
 		dto.setPessoa(vendaCompraLojaVirtual.getPessoa());
+		dto.setExcluido(vendaCompraLojaVirtual.getExcluido());
 		return dto;
 	}
 

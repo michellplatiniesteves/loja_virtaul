@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -40,10 +41,28 @@ public class VendaCompraLojaVirtualController {
 		return new ResponseEntity<String>(msg,HttpStatus.OK);
 	}
 	@ResponseBody
+	@PutMapping(value = "ativacaoLogica/{id}")
+	public ResponseEntity<String>ativacaoLogica(@PathVariable("id")Long id){
+         String msg = vendaCompraLojaVirtualService.ativacaoLogica(id);
+		return new ResponseEntity<String>(msg,HttpStatus.OK);
+	}
+	@ResponseBody
 	@DeleteMapping(value = "deletarVendaCompraLojaVirtualEncadeado/{id}")
 	public ResponseEntity<String>deletarVendaCompraLojaVirtualEncadeado(@PathVariable("id")Long id){
          String msg = vendaCompraLojaVirtualService.deletarVendaCompraLojaVirtualEncadeado(id);
 		return new ResponseEntity<String>(msg,HttpStatus.OK);
+	}
+	@ResponseBody
+	@DeleteMapping(value = "deletarVendaCompraLojaVirtualLogica/{id}")
+	public ResponseEntity<String>deletarVendaCompraLojaVirtualLogica(@PathVariable("id")Long id){
+         String msg = vendaCompraLojaVirtualService.deletarVendaCompraLojaVirtualLogica(id);
+		return new ResponseEntity<String>(msg,HttpStatus.OK);
+	}
+	@ResponseBody
+	@GetMapping(value = "buscaLogicaVendaCompraLojaVirtualPorId/{id}")
+	public ResponseEntity<VendaCompraLojaVirtualDTO>buscaLogicaVendaCompraLojaVirtualPorId(@PathVariable("id")Long id){
+		VendaCompraLojaVirtualDTO listabuscaLogicaVendaCompraLojaVirtualPorId = vendaCompraLojaVirtualService.buscaLogicaVendaCompraLojaVirtualPorId(id);
+		return new ResponseEntity<VendaCompraLojaVirtualDTO>(listabuscaLogicaVendaCompraLojaVirtualPorId,HttpStatus.OK);
 	}
 	@ResponseBody
 	@GetMapping(value = "buscarVendaCompraLojaVirtualPorId/{id}")

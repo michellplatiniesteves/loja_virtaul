@@ -11,14 +11,26 @@ public class VendaCompraLojaVirtualUtilitaria {
 	@Autowired
 	JdbcTemplate jdbcTemplate;
 
-	public void deletarEncadeado(@Param ("id")Long id) {
-    	String	value = "begin;"
-		           + "update nota_fiscal_venda set venda_compra_loja_virt_id=null where venda_compra_loja_virt_id = "+ id +"; "
-		           + "delete from nota_fiscal_venda  where venda_compra_loja_virt_id= "+ id +"; "
-		           + "delete from item_venda_loja  where venda_compra_loja_virt_id = "+ id +";"
-		           + "delete from status_rastreio  where venda_compra_loja_virt_id = "+ id +"; "
-		           + "delete from vd_cp_loja_virt where id = "+ id +"; "
-		           +"commit;";
+	public void deletarEncadeado(@Param("id") Long id) {
+		String value = "begin;"
+				+ "update nota_fiscal_venda set venda_compra_loja_virt_id=null where venda_compra_loja_virt_id = " + id
+				+ "; " + "delete from nota_fiscal_venda  where venda_compra_loja_virt_id= " + id + "; "
+				+ "delete from item_venda_loja  where venda_compra_loja_virt_id = " + id + ";"
+				+ "delete from status_rastreio  where venda_compra_loja_virt_id = " + id + "; "
+				+ "delete from vd_cp_loja_virt where id = " + id + "; " + "commit;";
+		jdbcTemplate.execute(value);
+	}
+
+	public void exclusaoLogica(@Param("id") Long id) {
+		String value = "begin;"
+				+ "update vd_cp_loja_virt set excluido=true where id ="+id+"; " 
+				+ "commit;";
+		jdbcTemplate.execute(value);
+	}
+	public void ativacaoLogica(@Param("id") Long id) {
+		String value = "begin;"
+				+ "update vd_cp_loja_virt set excluido=false where id ="+id+"; " 
+				+ "commit;";
 		jdbcTemplate.execute(value);
 	}
 }

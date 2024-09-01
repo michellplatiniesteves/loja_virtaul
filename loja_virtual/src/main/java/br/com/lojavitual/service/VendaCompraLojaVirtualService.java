@@ -113,6 +113,17 @@ public class VendaCompraLojaVirtualService {
 
 		return msg;
 	}
+	public String deletarVendaCompraLojaVirtualLogica(Long id) {
+		String msg;
+		if (!vendaCompraLojaVirtualRepository.existsById(id)) {
+			msg = "O id passado já foi deletado ou não existe";
+		} else {
+			vendaCompraLojaVirtualUtilitaria.exclusaoLogica(id);
+			msg = "Deletdo com sucesso";
+		}
+
+		return msg;
+	}
 	public VendaCompraLojaVirtualDTO  buscarVendaCompraLojaVirtualPorId(Long id) {
 		VendaCompraLojaVirtualDTO dto = new VendaCompraLojaVirtualDTO();
 		VendaCompraLojaVirtual listabuscarVendaCompraLojaVirtualPorId =  vendaCompraLojaVirtualRepository.findById(id).get();
@@ -120,6 +131,12 @@ public class VendaCompraLojaVirtualService {
 		 
 	}
 
+	public VendaCompraLojaVirtualDTO  buscaLogicaVendaCompraLojaVirtualPorId(Long id) {
+		VendaCompraLojaVirtualDTO dto = new VendaCompraLojaVirtualDTO();
+		VendaCompraLojaVirtual listabuscarVendaCompraLojaVirtualPorId =  vendaCompraLojaVirtualRepository.buscaLogicaVendaCompraLojaVirtualPorId(id);
+		return dto.converter(listabuscarVendaCompraLojaVirtualPorId);
+		 
+	}
 	public List<VendaCompraLojaVirtual> buscarVendaCompraLojaVirtualPorPessoa(Long id) {
 		List<VendaCompraLojaVirtual> listabuscarVendaCompraLojaVirtualPorPessoa = vendaCompraLojaVirtualRepository
 				.buscarVendaCompraLojaVirtualPorPessoa(id);
@@ -144,4 +161,9 @@ public class VendaCompraLojaVirtualService {
 		return listabuscarVendaCompraLojaVirtualPorFormaPagamento;
 	}
 
+	public String ativacaoLogica(Long id ) {
+		vendaCompraLojaVirtualUtilitaria.ativacaoLogica(id);
+		var msg="Ativado com sucesso";
+		return msg;
+	}
 }
