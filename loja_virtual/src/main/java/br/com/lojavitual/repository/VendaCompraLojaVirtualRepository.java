@@ -1,5 +1,7 @@
 package br.com.lojavitual.repository;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -31,5 +33,9 @@ public interface VendaCompraLojaVirtualRepository extends JpaRepository<VendaCom
     
 	@Query( value=" select vclv from VendaCompraLojaVirtual vclv  where vclv.id = ?1 and vclv.excluido = false")
 	VendaCompraLojaVirtual buscaLogicaVendaCompraLojaVirtualPorId(Long id);
+
+	@Query( value=" select vclv from VendaCompraLojaVirtual vclv  where vclv.dataVenda >= ?1 and vclv.dataVenda <= ?2 ")
+	List<VendaCompraLojaVirtual> buscarVendaCompraLojaVirtualPorIntervalo(Date data1Formatada,
+			Date data2form);
 
 }

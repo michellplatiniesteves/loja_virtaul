@@ -1,5 +1,6 @@
 package br.com.lojavitual.controller;
 
+import java.text.ParseException;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -74,6 +75,18 @@ public class VendaCompraLojaVirtualController {
 	@GetMapping(value = "buscarVendaCompraLojaVirtualPorPessoa/{id}")
 	public ResponseEntity<List<VendaCompraLojaVirtual>>buscarVendaCompraLojaVirtualPorPessoa(@PathVariable("id")Long id){
 		List<VendaCompraLojaVirtual>listabuscarVendaCompraLojaVirtualPorPessoa = vendaCompraLojaVirtualService.buscarVendaCompraLojaVirtualPorPessoa(id);
+		return new ResponseEntity<List<VendaCompraLojaVirtual>>(listabuscarVendaCompraLojaVirtualPorPessoa,HttpStatus.OK);
+	}
+	@ResponseBody
+	@GetMapping(value = "buscarVendaCompraLojaVirtualDinamica/{id}/{tipo}")
+	public ResponseEntity<List<VendaCompraLojaVirtual>>buscarVendaCompraLojaVirtualDinamica(@PathVariable("id")String id,@PathVariable("tipo")String tipo){
+		List<VendaCompraLojaVirtual>listabuscarVendaCompraLojaVirtualPorPessoa = vendaCompraLojaVirtualService.buscarVendaCompraLojaVirtualDinamica(id,tipo);
+		return new ResponseEntity<List<VendaCompraLojaVirtual>>(listabuscarVendaCompraLojaVirtualPorPessoa,HttpStatus.OK);
+	}
+	@ResponseBody
+	@GetMapping(value = "buscarVendaCompraLojaVirtualPorIntervalo/{data1}/{data2}")
+	public ResponseEntity<List<VendaCompraLojaVirtual>>buscarVendaCompraLojaVirtualPorIntervalo(@PathVariable("data1")String data1,@PathVariable("data2")String data2) throws ParseException{
+		List<VendaCompraLojaVirtual>listabuscarVendaCompraLojaVirtualPorPessoa = vendaCompraLojaVirtualService.buscarVendaCompraLojaVirtualPorIntervalo(data1,data2);
 		return new ResponseEntity<List<VendaCompraLojaVirtual>>(listabuscarVendaCompraLojaVirtualPorPessoa,HttpStatus.OK);
 	}
 	@ResponseBody

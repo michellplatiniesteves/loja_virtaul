@@ -1,5 +1,10 @@
 package br.com.lojavitual.service;
 
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -165,5 +170,27 @@ public class VendaCompraLojaVirtualService {
 		vendaCompraLojaVirtualUtilitaria.ativacaoLogica(id);
 		var msg="Ativado com sucesso";
 		return msg;
+	}
+
+	public List<VendaCompraLojaVirtual> buscarVendaCompraLojaVirtualDinamica(String id, String tipo) {
+		List<VendaCompraLojaVirtual> listaDinamica = new ArrayList<VendaCompraLojaVirtual>();	
+		if(tipo.equalsIgnoreCase("Pessoa")) {
+			listaDinamica = vendaCompraLojaVirtualRepository.buscarVendaCompraLojaVirtualPorPessoa(Long.valueOf(id));
+		}else if(tipo.equalsIgnoreCase("Empresa")) {
+			listaDinamica = vendaCompraLojaVirtualRepository.buscarVendaCompraLojaVirtualPorEmpresa(Long.valueOf(id));
+		}else if(tipo.equalsIgnoreCase("NotaFiscalVenda")) {
+			listaDinamica = vendaCompraLojaVirtualRepository.buscarVendaCompraLojaVirtualPorNotaFiscalVenda(Long.valueOf(id));
+		}else if(tipo.equalsIgnoreCase("FormaPagament")) {
+			listaDinamica = vendaCompraLojaVirtualRepository.buscarVendaCompraLojaVirtualPorFormaPagamento(Long.valueOf(id));
+		}
+		return listaDinamica;
+	}
+
+	public List<VendaCompraLojaVirtual> buscarVendaCompraLojaVirtualPorIntervalo(String data1, String data2) throws ParseException {
+		SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd"); 
+		Date data1Formatada = (Date) formato.parse(data1); 
+		Date data2Formatada = (Date) formato.parse(data2); 
+		List<VendaCompraLojaVirtual> listaPorIntervalo = vendaCompraLojaVirtualRepository.buscarVendaCompraLojaVirtualPorIntervalo(data1Formatada,data2Formatada);
+		return listaPorIntervalo;
 	}
 }
