@@ -24,6 +24,10 @@ public class NotaFiscalVendaService {
 		List<NotaFiscalVenda> buscaNotaFiscalVendaPorEmpresa = notaFiscalVendaRepository.buscaNotaFiscalVendaPorEmpresa(id);
 		return buscaNotaFiscalVendaPorEmpresa;
 	}
+	public List<NotaFiscalVenda> buscaNotaFiscalVendaPorVenda(Long id) {
+		List<NotaFiscalVenda> buscaNotaFiscalVendaPorEmpresa = notaFiscalVendaRepository.buscaNotaFiscalVendaPorVenda(id);
+		return buscaNotaFiscalVendaPorEmpresa;
+	}
 	public NotaFiscalVenda buscaNotaFiscalVendaPorId(Long id) {
 		NotaFiscalVenda buscaNotaFiscalVendaPorId = notaFiscalVendaRepository.findById(id).get();
 		return buscaNotaFiscalVendaPorId;

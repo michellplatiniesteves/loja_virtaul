@@ -3,7 +3,7 @@ package br.com.lojavitual.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -26,9 +26,12 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import br.com.lojavitual.enums.StatusVendaCompraLojaVirtual;
 
 @Entity
 @Table(name = "vd_cp_loja_virt")
@@ -95,12 +98,12 @@ public class VendaCompraLojaVirtual implements Serializable {
 	@NotNull(message = "Data da venda deve ser informada")
 	@Column(nullable = false)
 	@Temporal(TemporalType.DATE)
-	private Date dataVenda;
+	private Calendar dataVenda;
 
 	@NotNull(message = "Data da entrega deve ser informada")
 	@Column(nullable = false)
 	@Temporal(TemporalType.DATE)
-	private Date dataEntrega;
+	private Calendar dataEntrega;
 
 
 	@NotNull(message = "A empresa dona do registro deve ser informada")
@@ -111,7 +114,16 @@ public class VendaCompraLojaVirtual implements Serializable {
 	@OneToMany(mappedBy = "vendaCompraLojaVirtual", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<ItemVendaLoja> itemVendaLojas = new ArrayList<ItemVendaLoja>();
 
+	@Column(nullable = true)
+	@Enumerated(EnumType.STRING)
+	private StatusVendaCompraLojaVirtual statusVendaCompraLojaVirtual;
 	
+	public void setStatusVendaCompraLojaVirtual(StatusVendaCompraLojaVirtual statusVendaCompraLojaVirtual) {
+		this.statusVendaCompraLojaVirtual = statusVendaCompraLojaVirtual;
+	}
+	public StatusVendaCompraLojaVirtual getStatusVendaCompraLojaVirtual() {
+		return statusVendaCompraLojaVirtual;
+	}
 	Boolean excluido = Boolean.FALSE;
 	
 	public void setExcluido(Boolean excluido) {
@@ -221,19 +233,19 @@ public class VendaCompraLojaVirtual implements Serializable {
 		this.diasEntrega = diasEntrega;
 	}
 
-	public Date getDataVenda() {
+	public Calendar getDataVenda() {
 		return dataVenda;
 	}
 
-	public void setDataVenda(Date dataVenda) {
+	public void setDataVenda(Calendar dataVenda) {
 		this.dataVenda = dataVenda;
 	}
 
-	public Date getDataEntrega() {
+	public Calendar getDataEntrega() {
 		return dataEntrega;
 	}
 
-	public void setDataEntrega(Date dataEntrega) {
+	public void setDataEntrega(Calendar dataEntrega) {
 		this.dataEntrega = dataEntrega;
 	}
 

@@ -42,4 +42,9 @@ public class StatusRastreioService {
 		statusRastreio=statusRastreioRepository.save(statusRastreio);
 		return statusRastreio;
 	}
+
+	public List<StatusRastreio> buscaStatusRasteioPoVenda(Long id) {
+		List<StatusRastreio>buscaStatusRasteioPoVenda = statusRastreioRepository.buscaStatusRasteioPoVenda(id);
+		return buscaStatusRasteioPoVenda;
+	}
 }

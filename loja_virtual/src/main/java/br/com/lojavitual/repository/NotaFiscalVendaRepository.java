@@ -12,5 +12,7 @@ import br.com.lojavitual.model.NotaFiscalVenda;
 public interface NotaFiscalVendaRepository extends JpaRepository<NotaFiscalVenda, Long> {
     @Query(value = "select nfv from NotaFiscalVenda nfv where nfv.empresa.id = ?1 ")
 	List<NotaFiscalVenda> buscaNotaFiscalVendaPorEmpresa(Long id);
+    @Query(value = "select nfv from NotaFiscalVenda nfv where nfv.vendaCompraLojaVirtual.id = ?1 ")
+	List<NotaFiscalVenda> buscaNotaFiscalVendaPorVenda(Long id);
 
 }

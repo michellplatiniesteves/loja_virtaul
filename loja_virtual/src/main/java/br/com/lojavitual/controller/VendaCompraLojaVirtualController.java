@@ -1,5 +1,6 @@
 package br.com.lojavitual.controller;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.List;
 
@@ -18,6 +19,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.lojavitual.DTO.ConsultaFreteDTO;
+import br.com.lojavitual.DTO.EmpresaTransporteDTO;
+import br.com.lojavitual.DTO.RelatorioProdutosDTO;
+import br.com.lojavitual.DTO.RelatorioProdutosEstoqueMinimoDTO;
 import br.com.lojavitual.DTO.VendaCompraLojaVirtualDTO;
 import br.com.lojavitual.excecoes.ExceptionMentoriaJava;
 import br.com.lojavitual.model.VendaCompraLojaVirtual;
@@ -88,6 +93,24 @@ public class VendaCompraLojaVirtualController {
 	public ResponseEntity<List<VendaCompraLojaVirtual>>buscarVendaCompraLojaVirtualPorIntervalo(@PathVariable("data1")String data1,@PathVariable("data2")String data2) throws ParseException{
 		List<VendaCompraLojaVirtual>listabuscarVendaCompraLojaVirtualPorPessoa = vendaCompraLojaVirtualService.buscarVendaCompraLojaVirtualPorIntervalo(data1,data2);
 		return new ResponseEntity<List<VendaCompraLojaVirtual>>(listabuscarVendaCompraLojaVirtualPorPessoa,HttpStatus.OK);
+	}
+	@ResponseBody
+	@PostMapping(value = "relatorioProdutosEstoqueMinimo")
+	public ResponseEntity<List<RelatorioProdutosEstoqueMinimoDTO>>relatorioProdutosEstoqueMinimo( @RequestBody RelatorioProdutosEstoqueMinimoDTO dto) throws ParseException{
+		List<RelatorioProdutosEstoqueMinimoDTO>relatorioProdutosEstoqueMinimo = vendaCompraLojaVirtualService.relatorioProdutosEstoqueMinimo(dto);
+		return new ResponseEntity<List<RelatorioProdutosEstoqueMinimoDTO>>(relatorioProdutosEstoqueMinimo,HttpStatus.OK);
+	}
+	@ResponseBody
+	@PostMapping(value = "relatorioProdutos")
+	public ResponseEntity<List<RelatorioProdutosDTO>>relatorioProdutos( @RequestBody RelatorioProdutosDTO dto) throws ParseException{
+		List<RelatorioProdutosDTO>RelatorioProdutos = vendaCompraLojaVirtualService.relatorioProdutos(dto);
+		return new ResponseEntity<List<RelatorioProdutosDTO>>(RelatorioProdutos,HttpStatus.OK);
+	}
+	@ResponseBody
+	@PostMapping(value = "consultaFrete")
+	public ResponseEntity<List<EmpresaTransporteDTO>>consultaFrete( @RequestBody @Valid ConsultaFreteDTO dto) throws ParseException, IOException{
+		List<EmpresaTransporteDTO>consultaFrete = vendaCompraLojaVirtualService.consultaFrete(dto);
+		return new ResponseEntity<List<EmpresaTransporteDTO>>(consultaFrete,HttpStatus.OK);
 	}
 	@ResponseBody
 	@GetMapping(value = "buscarVendaCompraLojaVirtualPorEmpresa/{id}")

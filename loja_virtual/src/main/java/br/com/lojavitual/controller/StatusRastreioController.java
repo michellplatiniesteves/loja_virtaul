@@ -36,6 +36,13 @@ public class StatusRastreioController {
 	}
 	
 	@ResponseBody
+	@GetMapping(value = "buscaStatusRasteioPoVenda/{id}")
+	public ResponseEntity<List<StatusRastreio>>buscaStatusRasteioPoVenda(@PathVariable("id")Long id){
+	
+		List<StatusRastreio>listabuscaStatusRasteioPoVenda = statusRastreioService.buscaStatusRasteioPoVenda(id);
+		return new ResponseEntity<List<StatusRastreio>>(listabuscaStatusRasteioPoVenda,HttpStatus.OK);
+	}
+	@ResponseBody
 	@GetMapping(value = "buscaStatusRastreioPorId/{id}")
 	public ResponseEntity<StatusRastreio>buscaStatusRastreioPorId(@PathVariable("id")Long id){
 	

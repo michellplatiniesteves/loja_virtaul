@@ -51,6 +51,12 @@ public class NotaFiscalVendaController {
 		List<NotaFiscalVenda> buscaNotaFiscalVendaPorEmpresa=notaFiscalVendaService.buscaNotaFiscalVendaPorEmpresa(id);
 		return new ResponseEntity<List<NotaFiscalVenda>>(buscaNotaFiscalVendaPorEmpresa,HttpStatus.OK);
 	}
+	@GetMapping(value = "buscaNotaFiscalVendaPorVenda/{id}")
+	public ResponseEntity<List<NotaFiscalVenda>>buscaNotaFiscalVendaPorVenda(@PathVariable("id")Long id){
+	
+		List<NotaFiscalVenda> buscaNotaFiscalVendaPorVenda=notaFiscalVendaService.buscaNotaFiscalVendaPorVenda(id);
+		return new ResponseEntity<List<NotaFiscalVenda>>(buscaNotaFiscalVendaPorVenda,HttpStatus.OK);
+	}
 	@ResponseBody
 	@DeleteMapping(value = "deletarNotaFiscalVenda/{id}")
 	public ResponseEntity<String>deletarNotaFiscalVenda(@PathVariable("id")Long id){

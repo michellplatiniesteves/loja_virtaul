@@ -1,21 +1,33 @@
 package br.com.lojavitual.service;
 
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import br.com.lojavirtual.apitransporte.enums.ApiTokenIntregracao;
+import br.com.lojavitual.DTO.ConsultaFreteDTO;
+import br.com.lojavitual.DTO.EmpresaTransporteDTO;
 import br.com.lojavitual.DTO.ItemVendaDTO;
+import br.com.lojavitual.DTO.RelatorioProdutosDTO;
+import br.com.lojavitual.DTO.RelatorioProdutosEstoqueMinimoDTO;
 import br.com.lojavitual.DTO.VendaCompraLojaVirtualDTO;
 import br.com.lojavitual.controller.NotaFiscalVendaController;
 import br.com.lojavitual.controller.PessoaFisicaController;
 import br.com.lojavitual.controller.StatusRastreioController;
+import br.com.lojavitual.enums.StatusContaReceber;
 import br.com.lojavitual.excecoes.ExceptionMentoriaJava;
+import br.com.lojavitual.model.ContaReceber;
 import br.com.lojavitual.model.Endereco;
 import br.com.lojavitual.model.ItemVendaLoja;
 import br.com.lojavitual.model.PessoaFisica;
@@ -24,6 +36,11 @@ import br.com.lojavitual.model.VendaCompraLojaVirtual;
 import br.com.lojavitual.repository.EnderecoRepository;
 import br.com.lojavitual.repository.VendaCompraLojaVirtualRepository;
 import br.com.lojavitual.util.VendaCompraLojaVirtualUtilitaria;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 @Service
 public class VendaCompraLojaVirtualService {
@@ -44,7 +61,10 @@ public class VendaCompraLojaVirtualService {
 	private NotaFiscalVendaController notaFiscalVendaController ;
 	
 	@Autowired
-	VendaCompraLojaVirtualUtilitaria vendaCompraLojaVirtualUtilitaria;
+	private VendaCompraLojaVirtualUtilitaria vendaCompraLojaVirtualUtilitaria;
+	
+	@Autowired
+	private ContaReceberService contaReceberService;
 	
 	public VendaCompraLojaVirtualDTO salvarVendaCompraLojaVirtual(VendaCompraLojaVirtual vendaCompraLojaVirtual) throws ExceptionMentoriaJava {
 		
@@ -85,6 +105,18 @@ public class VendaCompraLojaVirtualService {
 		statusRastreio.setVendaCompraLojaVirtual(vendaCompraLojaVirtual);
 		statusRastreioController.salvarStatusRastreio(statusRastreio);
 
+		ContaReceber contaReceber = new ContaReceber();
+		contaReceber.setDescricao("Venda loja virtual");
+		contaReceber.setDtPagamento(vendaCompraLojaVirtual.getDataVenda());
+		contaReceber.setDtVencimento(vendaCompraLojaVirtual.getDataVenda());
+		contaReceber.setEmpresa(vendaCompraLojaVirtual.getEmpresa());
+		contaReceber.setPessoa(vendaCompraLojaVirtual.getPessoa());
+		contaReceber.setStatusContaReceber(StatusContaReceber.QUITADA);
+		contaReceber.setValorDesconto(vendaCompraLojaVirtual.getCupDesc().getValorRealDesc());
+		contaReceber.setValorTotal(vendaCompraLojaVirtual.getValorTotal());
+		
+		contaReceberService.salvarContaPagar(contaReceber);
+		
 		VendaCompraLojaVirtualDTO dto = new VendaCompraLojaVirtualDTO();
 		
 		for (ItemVendaLoja item : vendaCompraLojaVirtual.getItemVendaLojas()) {
@@ -192,5 +224,58 @@ public class VendaCompraLojaVirtualService {
 		Date data2Formatada = (Date) formato.parse(data2); 
 		List<VendaCompraLojaVirtual> listaPorIntervalo = vendaCompraLojaVirtualRepository.buscarVendaCompraLojaVirtualPorIntervalo(data1Formatada,data2Formatada);
 		return listaPorIntervalo;
+	}
+
+	public List<RelatorioProdutosDTO> relatorioProdutos(RelatorioProdutosDTO dto) {
+		List<RelatorioProdutosDTO> resultado = vendaCompraLojaVirtualUtilitaria.relatorioProdutos(dto);
+		return resultado;
+	}
+	public List<RelatorioProdutosEstoqueMinimoDTO> relatorioProdutosEstoqueMinimo(RelatorioProdutosEstoqueMinimoDTO dto) {
+		List<RelatorioProdutosEstoqueMinimoDTO> resultado = vendaCompraLojaVirtualUtilitaria.relatorioProdutosEstoqueMinimo(dto);
+		return resultado;
+	}
+
+	public List<EmpresaTransporteDTO> consultaFrete(ConsultaFreteDTO dto) throws IOException {
+		ObjectMapper objectMapper = new ObjectMapper();
+		String json = objectMapper.writeValueAsString(dto);
+		 OkHttpClient client = new OkHttpClient().newBuilder().build();
+
+		 MediaType mediaType = MediaType.parse("application/json");
+		 RequestBody body = RequestBody.create(mediaType,json);
+		 Request request = new Request.Builder()
+		   .url(ApiTokenIntregracao.URL_MELHOR_ENVIO+"/api/v2/me/shipment/calculate")
+		   .post(body)
+		   .addHeader("Accept", "application/json")
+		   .addHeader("Content-Type", "application/json")
+		   .addHeader("Authorization", "Bearer "+ApiTokenIntregracao.TOKEN_SANDBOX)
+		   .addHeader("User-Agent", "michellplatini@gmail.com")
+		   .build();
+
+		 Response response = client.newCall(request).execute();
+		 //System.out.println(response.body().string());
+		 JsonNode jsonNode = new ObjectMapper().readTree(response.body().string());
+		 Iterator<JsonNode> iterator =jsonNode.iterator();
+		 List<EmpresaTransporteDTO>listaempresas = new ArrayList<EmpresaTransporteDTO>();
+		 while(iterator.hasNext()) {
+			 EmpresaTransporteDTO empresaTransporteDTO = new EmpresaTransporteDTO();
+			JsonNode node = iterator.next() ;
+			if(node.get("id")!= null) {
+				empresaTransporteDTO.setId(node.get("id").asText());
+			}
+			if(node.get("name")!= null) {
+				empresaTransporteDTO.setNome(node.get("name").asText());
+			}
+			if(node.get("price")!= null) {
+				empresaTransporteDTO.setValor(node.get("price").asText());
+			}
+			if(node.get("company")!= null) {
+				empresaTransporteDTO.setEmpresa(node.get("company").get("name").asText());
+				empresaTransporteDTO.setPicture(node.get("company").get("picture").asText());
+			}
+	        if(empresaTransporteDTO.dadosOK()) {
+	        	listaempresas.add(empresaTransporteDTO);
+	        }
+		 }
+		return listaempresas;
 	}
 }
