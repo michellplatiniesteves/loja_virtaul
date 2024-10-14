@@ -1,8 +1,9 @@
 package br.com.lojavitual.DTO;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
-public class ProductsDTO implements Serializable{
+public class ProdutcsEnvioEtiquetaDTO implements Serializable{
 
 	/**
 	 * 
@@ -29,8 +30,5 @@ public class ProductsDTO implements Serializable{
 	public void setUnitary_value(String unitary_value) {
 		this.unitary_value = unitary_value;
 	}
-
-
 	
-
 }

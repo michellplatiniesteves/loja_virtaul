@@ -46,6 +46,8 @@ public class Endereco implements Serializable {
 	private String uf; 
 	@Column(nullable = false)
 	private String cidade;
+	@Column(nullable = false)
+	private String estado;
 	private String complemento; 
 	
 	@Enumerated(EnumType.STRING)
@@ -61,6 +63,12 @@ public class Endereco implements Serializable {
 	@JoinColumn(name = "empresa_id",nullable = false,foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT,name= "empresa_fk"))
 	private PessoaJuridica empresa;
 	
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+	public String getEstado() {
+		return estado;
+	}
 	public void setCep(String cep) {
 		this.cep = cep;
 	}

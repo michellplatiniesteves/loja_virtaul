@@ -59,19 +59,19 @@ public class Produto implements Serializable{
 	@Min(value = 1,message = "Informe valores acima de 0")
 	@NotNull(message = "Informe o peso")
 	@Column(nullable = false)
-	private Double peso=0.0;
+	private Double peso;
 	
 	@NotNull(message = "Informe a altura")
 	@Column(nullable = false)
-	private Double altura=0.0;
+	private Double altura;
 	
 	@NotNull(message = "Informe a largura")
 	@Column(nullable = false)
-	private Double largura=0.0;
+	private Double largura;
 	
 	@NotNull(message = "Informe a profundidade")
 	@Column(nullable = false)
-	private Double profundidade=0.0;
+	private Double profundidade;
 	
 	@NotNull(message = "Informe o Valor de Venda")
 	@Column(nullable = false)

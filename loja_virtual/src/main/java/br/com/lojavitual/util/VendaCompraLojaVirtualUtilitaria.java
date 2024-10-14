@@ -98,4 +98,5 @@ public class VendaCompraLojaVirtualUtilitaria {
 		List<RelatorioProdutosEstoqueMinimoDTO> resultado = new ArrayList<RelatorioProdutosEstoqueMinimoDTO>();
 		return resultado = jdbcTemplate.query(sql,new BeanPropertyRowMapper(RelatorioProdutosEstoqueMinimoDTO.class));
 	}
+
 }

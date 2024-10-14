@@ -16,7 +16,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class TesteApiIntegracao {
+public class CalcularFrete {
  public static void main(String[] args) throws IOException {
 	 OkHttpClient client = new OkHttpClient();
 

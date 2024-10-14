@@ -124,8 +124,29 @@ public class VendaCompraLojaVirtual implements Serializable {
 	public StatusVendaCompraLojaVirtual getStatusVendaCompraLojaVirtual() {
 		return statusVendaCompraLojaVirtual;
 	}
-	Boolean excluido = Boolean.FALSE;
+	private Boolean excluido = Boolean.FALSE;
+	private String codigoEtiqueta;
+	private String urlImprimeEtiqueta;
+	private String servicoTransportadora;
+	public void setServicoTransportadora(String servicoTransportadora) {
+		this.servicoTransportadora = servicoTransportadora;
+	}
+	public String getServicoTransportadora() {
+		return servicoTransportadora;
+	}
 	
+	public String getCodigoEtiqueta() {
+		return codigoEtiqueta;
+	}
+	public void setCodigoEtiqueta(String codigoEtiqueta) {
+		this.codigoEtiqueta = codigoEtiqueta;
+	}
+	public String getUrlImprimeEtiqueta() {
+		return urlImprimeEtiqueta;
+	}
+	public void setUrlImprimeEtiqueta(String urlImprimeEtiqueta) {
+		this.urlImprimeEtiqueta = urlImprimeEtiqueta;
+	}
 	public void setExcluido(Boolean excluido) {
 		this.excluido = excluido;
 	}

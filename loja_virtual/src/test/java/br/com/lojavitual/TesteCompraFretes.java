@@ -17,7 +17,7 @@ public class TesteCompraFretes {
 		MediaType mediaType = MediaType.parse("application/json");
 		RequestBody body = RequestBody.create(mediaType, "{\"orders\":[\"9cfcc09c-9f01-4e3b-8840-2fc20ed95c95\"]}");
 		Request request = new Request.Builder()
-				.url(ApiTokenIntregracao.URL_MELHOR_ENVIO + "/api/v2/me/shipment/generate")
+				.url(ApiTokenIntregracao.URL_MELHOR_ENVIO + "/api/v2/me/shipment/checkout")
 				.post(body)
 				.addHeader("Accept", "application/json").addHeader("Content-Type", "application/json")
 				.addHeader("Authorization", "Bearer " + ApiTokenIntregracao.TOKEN_SANDBOX)

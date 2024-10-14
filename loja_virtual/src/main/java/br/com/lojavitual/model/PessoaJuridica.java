@@ -10,6 +10,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.br.CNPJ;
+import org.hibernate.validator.constraints.br.CPF;
 
 @Entity
 @Table(name = "pessoa_juridica")
@@ -47,6 +48,16 @@ public class PessoaJuridica extends Pessoa {
 	@Column(nullable = false)
 	private String categoria;
 	
+    @CPF(message = "CPF invalido")
+	@Column(nullable = true)
+	private String cpf_resposavel;
+    
+public void setCpf_resposavel(String cpf_resposavel) {
+	this.cpf_resposavel = cpf_resposavel;
+}
+public String getCpf_resposavel() {
+	return cpf_resposavel;
+}
 	public String getCnpj() {
 		return cnpj;
 	}

@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.lojavitual.DTO.ConsultaFreteDTO;
 import br.com.lojavitual.DTO.EmpresaTransporteDTO;
+import br.com.lojavitual.DTO.EnvioEtiquetaDTO;
 import br.com.lojavitual.DTO.RelatorioProdutosDTO;
 import br.com.lojavitual.DTO.RelatorioProdutosEstoqueMinimoDTO;
 import br.com.lojavitual.DTO.VendaCompraLojaVirtualDTO;
@@ -72,9 +73,9 @@ public class VendaCompraLojaVirtualController {
 	}
 	@ResponseBody
 	@GetMapping(value = "buscarVendaCompraLojaVirtualPorId/{id}")
-	public ResponseEntity<VendaCompraLojaVirtualDTO>buscarVendaCompraLojaVirtualPorId(@PathVariable("id")Long id){
-		VendaCompraLojaVirtualDTO listabuscarVendaCompraLojaVirtualPorId = vendaCompraLojaVirtualService.buscarVendaCompraLojaVirtualPorId(id);
-		return new ResponseEntity<VendaCompraLojaVirtualDTO>(listabuscarVendaCompraLojaVirtualPorId,HttpStatus.OK);
+	public ResponseEntity<VendaCompraLojaVirtual>buscarVendaCompraLojaVirtualPorId(@PathVariable("id")Long id){
+		VendaCompraLojaVirtual listabuscarVendaCompraLojaVirtualPorId = (VendaCompraLojaVirtual) vendaCompraLojaVirtualService.buscarVendaCompraLojaVirtualPorId(id);
+		return new ResponseEntity<VendaCompraLojaVirtual>(listabuscarVendaCompraLojaVirtualPorId,HttpStatus.OK);
 	}
 	@ResponseBody
 	@GetMapping(value = "buscarVendaCompraLojaVirtualPorPessoa/{id}")
@@ -99,6 +100,12 @@ public class VendaCompraLojaVirtualController {
 	public ResponseEntity<List<RelatorioProdutosEstoqueMinimoDTO>>relatorioProdutosEstoqueMinimo( @RequestBody RelatorioProdutosEstoqueMinimoDTO dto) throws ParseException{
 		List<RelatorioProdutosEstoqueMinimoDTO>relatorioProdutosEstoqueMinimo = vendaCompraLojaVirtualService.relatorioProdutosEstoqueMinimo(dto);
 		return new ResponseEntity<List<RelatorioProdutosEstoqueMinimoDTO>>(relatorioProdutosEstoqueMinimo,HttpStatus.OK);
+	}
+	@ResponseBody
+	@GetMapping(value = "ImprimeCompraEtiquetaFrete/{idVenda}")
+	public ResponseEntity<String>ImprimeCompraEtiquetaFrete( @PathVariable Long  idVenda) throws ParseException, IOException, ExceptionMentoriaJava{
+		String compraLojaVirtual =  vendaCompraLojaVirtualService.ImprimeCompraEtiquetaFrete(idVenda);
+		return  new ResponseEntity<String>(compraLojaVirtual,HttpStatus.OK);
 	}
 	@ResponseBody
 	@PostMapping(value = "relatorioProdutos")
